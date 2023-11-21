@@ -8,14 +8,13 @@
 class ChessBoard {
 
         public:
-			void loadState(char*);
+			void loadState(const char*);
 			void submitMove(char*, char*);
-			void displayPositions();
+			void getInitialPieces();
+			void displayPieces();
         private:
-			char* FEN_string;
-			Piece *pieces[16];
-
-
+			const char *FEN_string;
+			Piece *pieces[32];
 };
 
 #endif

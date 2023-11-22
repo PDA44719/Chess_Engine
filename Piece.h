@@ -4,11 +4,11 @@
 class Piece {
 
         public:
-			Piece(char piece_type);
+			Piece(char piece_type, char piece_position[2]);
 			//void getPosition();
 			void getType();
         private:
-			//char *position;
+			char *position;
 			char type;
 
 };

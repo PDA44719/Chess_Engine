@@ -15,19 +15,15 @@ Piece::Piece(char piece_type, char piece_position[2]): type(piece_type), positio
 ostream& operator<<(ostream &o, Color color){
         switch(color){
                 case WHITE:
-                        o << "white";
+                        o << "White";
                         break;
                 default: // BLACK
-                        o << "black";
+                        o << "Black";
                         break;
         }
         return o;
 }
 
-void Piece::getType(){
-	cout << this->type << " at poisition " << position; 
-	cout << " with colour " << colour << endl;
-}
 
 void Piece::getColour(){
 	if (type >= 'A' && type >= 'Z') // type is uppercase

@@ -1,6 +1,7 @@
 #include<iostream>
 #include "ChessBoard.h"
 #include "Piece.h"
+#include "King.h"
 using namespace std;
 
 void ChessBoard::loadState(const char* string){
@@ -10,11 +11,14 @@ void ChessBoard::loadState(const char* string){
 
 void ChessBoard::displayPieces(){
 	for (int i=0; i<32; i++){
-		//cout << "I am doing something at position " << i << endl;
 		pieces[i]->getType();
-		//cout << i << endl;
 	}
 }
+
+
+//void definePiece(char type, position){
+	
+//}
 
 void ChessBoard::getInitialPieces(){
 	const char *ptr = FEN_string;
@@ -28,14 +32,14 @@ void ChessBoard::getInitialPieces(){
 			piece_position[1] = initial_position[1];
 
 			// Create the new piece
-			pieces[piece_counter] = new Piece(*ptr, piece_position);
+			pieces[piece_counter] = new King(*ptr, piece_position);
 
 			// Increase the piece counter and go to the next position in the board
 			piece_counter++;
 			initial_position[0] += 1;
 
 		} else if (*ptr >= '1' && *ptr <= '8') { // Go to the next non-empty cell
-			initial_position[0] += *ptr - '1';
+			initial_position[0] += *ptr - '0';
 
 		} else { // If there is a '/', the go to the next rank
 			initial_position[0] = 'A';

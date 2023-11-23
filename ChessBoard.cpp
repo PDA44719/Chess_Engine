@@ -2,6 +2,11 @@
 #include "ChessBoard.h"
 #include "Piece.h"
 #include "King.h"
+#include "Queen.h"
+#include "Bishop.h"
+#include "Rook.h"
+#include "Pawn.h"
+#include "Knight.h"
 using namespace std;
 
 void ChessBoard::loadState(const char* string){
@@ -16,9 +21,35 @@ void ChessBoard::displayPieces(){
 }
 
 
-//void definePiece(char type, position){
-	
-//}
+void ChessBoard::createPiece(int piece_index, char type, char position[2]){
+	switch(type){
+		case 'r':
+		case 'R':
+			pieces[piece_index] = new Rook(type, position);
+			break;
+		case 'k':
+		case 'K':
+			pieces[piece_index] = new King(type, position);
+			break;
+		case 'q':
+		case 'Q':
+			pieces[piece_index] = new Queen(type, position);
+			break;
+		case 'b':
+		case 'B':
+			pieces[piece_index] = new Bishop(type, position);
+			break;
+		case 'p':
+		case 'P':
+			pieces[piece_index] = new Pawn(type, position);
+			break;
+		case 'n':
+		case 'N':
+			pieces[piece_index] = new Knight(type, position);
+			break;
+			
+	}
+}
 
 void ChessBoard::getInitialPieces(){
 	const char *ptr = FEN_string;
@@ -32,7 +63,8 @@ void ChessBoard::getInitialPieces(){
 			piece_position[1] = initial_position[1];
 
 			// Create the new piece
-			pieces[piece_counter] = new King(*ptr, piece_position);
+			//pieces[piece_counter] = new King(*ptr, piece_position);
+			this->createPiece(piece_counter, *ptr, piece_position);
 
 			// Increase the piece counter and go to the next position in the board
 			piece_counter++;

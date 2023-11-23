@@ -26,7 +26,7 @@ ostream& operator<<(ostream &o, Color color){
 
 
 void Piece::getColour(){
-	if (type >= 'A' && type >= 'Z') // type is uppercase
+	if (type >= 'A' && type <= 'Z') // type is uppercase
 		colour = WHITE;
 	else
 		colour = BLACK;

@@ -24,4 +24,7 @@ int main() {
 	//cb.loadState("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq");
 	cb.loadState("rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq");
 	cb.displayPieces();
+
+	//cb.submitMove("D7", "D6");
+	cout << '\n';
 }

@@ -9,6 +9,6 @@ void King::getType(){
 	cout << colour << " king at poisition " << position << endl; 
 }
 
-//ostream& operator<<(ostream& o, King k){
-	//o << "King at position " << position << endl;
+//ostream& operator<<(ostream& o, Knight k){
+	//o << "Knight at position " << position << endl;
 //}

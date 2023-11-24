@@ -3,10 +3,14 @@
 #include "Knight.h"
 using namespace std;
 
-Knight::Knight(char type, char position[2]) : Piece(type, position){}
+Knight::Knight(char type, Position position) : Piece(type, position){}
 
 void Knight::getType(){
-	cout << colour << " knight at poisition " << position << endl; 
+	//cout << colour << " knight at poisition " << position << endl; 
+	if (colour == WHITE)
+		cout << "♘";
+	else
+		cout << "♞";
 }
 
 //ostream& operator<<(ostream& o, King k){

@@ -3,10 +3,14 @@
 #include "Bishop.h"
 using namespace std;
 
-Bishop::Bishop(char type, char position[2]) : Piece(type, position){}
+Bishop::Bishop(char type, Position position) : Piece(type, position){}
 
 void Bishop::getType(){
-	cout << colour << " bishop at poisition " << position << endl; 
+	//cout << colour << " bishop at poisition " << position << endl; 
+	if (colour == WHITE)
+		cout << "♗";
+	else
+		cout << "♝";
 }
 
 //ostream& operator<<(ostream& o, Bishop k){

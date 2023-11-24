@@ -51,6 +51,19 @@ void ChessBoard::createPiece(int piece_index, char type, char position[2]){
 	}
 }
 
+void ChessBoard::submitMove(char initial_position[2], char final_position[2]){
+	for (int i=0; i<32; i++){
+		//cout << pieces[i]->getPosition();
+		//cout << " and " << initial_position << " is being looked for" << endl;
+		if (pieces[i]!=NULL && pieces[i]->getPosition()[0] == initial_position[0] && pieces[i]->getPosition()[1] == initial_position[1]){
+			pieces[i]->updatePosition(final_position);
+			pieces[i]->getType();
+			return;
+		}
+	}
+	cout << "No pieces were found in that position" << endl;
+}
+
 void ChessBoard::getInitialPieces(){
 	const char *ptr = FEN_string;
 	int piece_counter = 0;

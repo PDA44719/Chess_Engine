@@ -6,10 +6,13 @@ Piece::Piece(char piece_type, char piece_position[2]): type(piece_type), positio
 	this->getColour();
 }
 
-//void Piece::getPosition(){
-	//cout << this.(*position) << this.(*position + 1) << endl;
-//}
+char* Piece::getPosition(){
+	return position;
+}
 
+void Piece::updatePosition(char* new_position) {
+	position = new_position;
+}
 
 // Define the behaviour of ostream << when dealing with the Color enum
 ostream& operator<<(ostream &o, Color color){

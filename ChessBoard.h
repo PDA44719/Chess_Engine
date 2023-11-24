@@ -9,7 +9,7 @@ class ChessBoard {
 
         public:
 			void loadState(const char*);
-			void submitMove(char*, char*);
+			void submitMove(char[2], char[2]);
 			void getInitialPieces();
 			void displayPieces();
 			void createPiece(int, char, char[2]);

@@ -7,14 +7,17 @@ enum Color {
 	BLACK
 };
 
+std::ostream& operator << (std::ostream&, Color);
+			
 class Piece {
 
         public:
 			Piece(char piece_type, char piece_position[2]);
 			//void getPosition();
 			virtual void getType() = 0;
-			friend std::ostream& operator << (std::ostream&, Color);
 			void getColour();
+			char* getPosition();
+			void updatePosition(char*);
         protected:
 			char *position;
 			Color colour;

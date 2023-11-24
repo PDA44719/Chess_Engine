@@ -7,6 +7,7 @@
 #include "Rook.h"
 #include "Pawn.h"
 #include "Knight.h"
+#include "Position.h"
 using namespace std;
 
 void ChessBoard::loadState(const char* string){
@@ -15,13 +16,28 @@ void ChessBoard::loadState(const char* string){
 }
 
 void ChessBoard::displayPieces(){
-	for (int i=0; i<32; i++){
-		pieces[i]->getType();
+	cout << "  A B C D E F G H\n";
+	for (Position p("A8"); p!=Position("A0"); p.move('1')){
+		if (p.getFile() == 'A')
+			cout << p.getRank() << " ";
+		bool piece_found = false;
+		for (int i=0; i<32; i++){
+			if (pieces[i]->getPosition() == p){
+				pieces[i]->getType();
+				cout << " ";
+				piece_found = true;
+			}
+		}
+		if (!piece_found)
+			cout << "- ";
+		if (p.getFile() == 'H')
+			cout << "\n";
+
 	}
 }
 
 
-void ChessBoard::createPiece(int piece_index, char type, char position[2]){
+void ChessBoard::createPiece(int piece_index, char type, Position position){
 	switch(type){
 		case 'r':
 		case 'R':
@@ -55,9 +71,9 @@ void ChessBoard::submitMove(char initial_position[2], char final_position[2]){
 	for (int i=0; i<32; i++){
 		//cout << pieces[i]->getPosition();
 		//cout << " and " << initial_position << " is being looked for" << endl;
-		if (pieces[i]!=NULL && pieces[i]->getPosition()[0] == initial_position[0] && pieces[i]->getPosition()[1] == initial_position[1]){
-			pieces[i]->updatePosition(final_position);
-			pieces[i]->getType();
+		if (pieces[i]!=NULL && pieces[i]->getPosition() == Position(initial_position)){
+			pieces[i]->updatePosition(Position(final_position));
+			//pieces[i]->getType();
 			return;
 		}
 	}
@@ -67,29 +83,18 @@ void ChessBoard::submitMove(char initial_position[2], char final_position[2]){
 void ChessBoard::getInitialPieces(){
 	const char *ptr = FEN_string;
 	int piece_counter = 0;
-	char initial_position[] = "A8";
+	Position pos("A8");
 	while (*ptr != ' '){
 		if (*ptr >= 'A' && *ptr <= 'z'){
-			// Define a new position char array
-			char *piece_position = new char[2];
-			piece_position[0] = initial_position[0];
-			piece_position[1] = initial_position[1];
-
 			// Create the new piece
 			//pieces[piece_counter] = new King(*ptr, piece_position);
-			this->createPiece(piece_counter, *ptr, piece_position);
+			this->createPiece(piece_counter, *ptr, pos);
 
 			// Increase the piece counter and go to the next position in the board
 			piece_counter++;
-			initial_position[0] += 1;
-
-		} else if (*ptr >= '1' && *ptr <= '8') { // Go to the next non-empty cell
-			initial_position[0] += *ptr - '0';
-
-		} else { // If there is a '/', the go to the next rank
-			initial_position[0] = 'A';
-			initial_position[1] -= 1;
 		}
+		if (*ptr != '/')
+			pos.move(*ptr);
 		ptr++;
 	}
 }

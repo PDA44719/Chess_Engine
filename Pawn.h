@@ -5,7 +5,7 @@
 
 class Pawn : public Piece {
 	public:
-		Pawn(char type, char position[2]);
+		Pawn(char type, Position position);
 		void getType() override;
 };
 

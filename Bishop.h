@@ -5,7 +5,7 @@
 
 class Bishop : public Piece {
 	public:
-		Bishop(char type, char position[2]);
+		Bishop(char type, Position position);
 		void getType() override;
 };
 

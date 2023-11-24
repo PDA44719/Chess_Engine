@@ -5,7 +5,7 @@
 
 class Knight : public Piece {
 	public:
-		Knight(char type, char position[2]);
+		Knight(char type, Position position);
 		void getType() override;
 };
 

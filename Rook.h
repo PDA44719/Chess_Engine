@@ -5,7 +5,7 @@
 
 class Rook : public Piece {
 	public:
-		Rook(char type, char position[2]);
+		Rook(char type, Position position);
 		void getType() override;
 };
 

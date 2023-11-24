@@ -2,15 +2,15 @@
 #include "Piece.h"
 using namespace std;
 
-Piece::Piece(char piece_type, char piece_position[2]): type(piece_type), position(&piece_position[0]) {
+Piece::Piece(char piece_type, Position pos): type(piece_type), position(pos) {
 	this->getColour();
 }
 
-char* Piece::getPosition(){
+Position Piece::getPosition(){
 	return position;
 }
 
-void Piece::updatePosition(char* new_position) {
+void Piece::updatePosition(Position new_position) {
 	position = new_position;
 }
 

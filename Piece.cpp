@@ -2,17 +2,17 @@
 #include "Piece.h"
 using namespace std;
 
-Piece::Piece(char piece_type, Position pos): type(piece_type), position(pos) {
+Piece::Piece(char piece_type): type(piece_type) {
 	this->getColour();
 }
 
-Position Piece::getPosition(){
-	return position;
-}
+//Position Piece::getPosition(){
+//	return position;
+//}
 
-void Piece::updatePosition(Position new_position) {
-	position = new_position;
-}
+//void Piece::updatePosition(Position new_position) {
+//	position = new_position;
+//}
 
 // Define the behaviour of ostream << when dealing with the Color enum
 ostream& operator<<(ostream &o, Color color){

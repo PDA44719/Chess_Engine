@@ -3,7 +3,7 @@
 #include "Knight.h"
 using namespace std;
 
-Knight::Knight(char type, Position position) : Piece(type, position){}
+Knight::Knight(char type) : Piece(type){}
 
 void Knight::getType(){
 	//cout << colour << " knight at poisition " << position << endl; 

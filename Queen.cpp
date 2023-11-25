@@ -3,7 +3,7 @@
 #include "Queen.h"
 using namespace std;
 
-Queen::Queen(char type, Position position) : Piece(type, position){}
+Queen::Queen(char type) : Piece(type){}
 
 void Queen::getType(){
 	//cout << colour << " queen at poisition " << position << endl; 

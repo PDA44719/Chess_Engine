@@ -5,7 +5,7 @@
 
 class Queen : public Piece {
 	public:
-		Queen(char type, Position position);
+		Queen(char type);
 		void getType() override;
 };
 

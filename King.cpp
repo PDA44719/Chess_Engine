@@ -3,7 +3,7 @@
 #include "King.h"
 using namespace std;
 
-King::King(char type, Position position) : Piece(type, position){}
+King::King(char type) : Piece(type){}
 
 void King::getType(){
 	//cout << colour << " king at poisition " << position << endl; 

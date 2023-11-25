@@ -3,7 +3,7 @@
 #include "Pawn.h"
 using namespace std;
 
-Pawn::Pawn(char type, Position position) : Piece(type, position){}
+Pawn::Pawn(char type) : Piece(type){}
 
 void Pawn::getType(){
 	//cout << colour << " pawn at poisition " << position << endl; 

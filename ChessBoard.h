@@ -10,12 +10,11 @@ class ChessBoard {
         public:
 			void loadState(const char*);
 			void submitMove(char[2], char[2]);
-			void getInitialPieces();
+			void getInitialBoard(const char*);
 			void displayPieces();
-			void createPiece(int, char, Position);
+			void createPiece(char, Position);
         private:
-			const char *FEN_string;
-			Piece *pieces[32];
+			Piece* board[8][8];
 };
 
 #endif

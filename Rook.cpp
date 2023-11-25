@@ -3,7 +3,7 @@
 #include "Rook.h"
 using namespace std;
 
-Rook::Rook(char type, Position position) : Piece(type, position){}
+Rook::Rook(char type) : Piece(type){}
 
 void Rook::getType(){
 	//cout << colour << " rook at poisition " << position << endl; 

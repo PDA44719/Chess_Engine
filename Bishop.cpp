@@ -3,7 +3,7 @@
 #include "Bishop.h"
 using namespace std;
 
-Bishop::Bishop(char type, Position position) : Piece(type, position){}
+Bishop::Bishop(char type) : Piece(type){}
 
 void Bishop::getType(){
 	//cout << colour << " bishop at poisition " << position << endl; 

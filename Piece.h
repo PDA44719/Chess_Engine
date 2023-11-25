@@ -13,14 +13,11 @@ std::ostream& operator << (std::ostream&, Color);
 class Piece {
 
         public:
-			Piece(char piece_type, Position pos);
+			Piece(char piece_type);
 			//void getPosition();
 			virtual void getType() = 0;
 			void getColour();
-			Position getPosition();
-			void updatePosition(Position);
         protected:
-			Position position;
 			Color colour;
 		private:
 			char type; // You do not need to access this variable, as you only use it to extract the color

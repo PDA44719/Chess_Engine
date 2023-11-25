@@ -14,7 +14,7 @@ class ChessBoard {
 			void displayPieces();
 			void createPiece(char, Position);
         private:
-			Piece* board[8][8];
+			Piece* board[8][8] = {}; // Initialize all the pointers to NULL
 };
 
 #endif

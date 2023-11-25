@@ -16,7 +16,8 @@ class Piece {
 			Piece(char piece_type);
 			//void getPosition();
 			virtual void getType() = 0;
-			void getColour();
+			void setColour();
+			Color getColour();
         protected:
 			Color colour;
 		private:

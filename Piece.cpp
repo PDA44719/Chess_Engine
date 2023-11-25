@@ -3,7 +3,7 @@
 using namespace std;
 
 Piece::Piece(char piece_type): type(piece_type) {
-	this->getColour();
+	this->setColour();
 }
 
 //Position Piece::getPosition(){
@@ -28,9 +28,13 @@ ostream& operator<<(ostream &o, Color color){
 }
 
 
-void Piece::getColour(){
+void Piece::setColour(){
 	if (type >= 'A' && type <= 'Z') // type is uppercase
 		colour = WHITE;
 	else
 		colour = BLACK;
+}
+
+Color Piece::getColour(){
+        return colour;
 }

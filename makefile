@@ -1,0 +1,2 @@
+chess: tester.cpp ChessBoard.cpp Piece.cpp King.cpp Queen.cpp Rook.cpp Knight.cpp Bishop.cpp Pawn.cpp Position.cpp
+	g++ -g -Wall tester.cpp ChessBoard.cpp Piece.cpp King.cpp Queen.cpp Rook.cpp Knight.cpp Bishop.cpp Pawn.cpp Position.cpp -o chess

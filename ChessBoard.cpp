@@ -10,12 +10,13 @@
 #include "Position.h"
 using namespace std;
 
+ChessBoard::ChessBoard(): gm(GameManager(this)){}
+
 void ChessBoard::loadState(const char* FEN_string){
 	this->getInitialBoard(FEN_string);
 }
 
 void ChessBoard::displayPieces(){
-	cout << board[0][0] << endl;
 	cout << "  A B C D E F G H\n";
 	for (Position p("A8"); p!=Position("A0"); p.move('1')){
 		if (p.getFile() == 'A')
@@ -67,8 +68,10 @@ void ChessBoard::submitMove(char initial_position[2], char final_position[2]){
 	Position p(initial_position);
 	Position final_p(final_position);
 	if (board[p.getRank() - '1'][p.getFile() - 'A'] != NULL){
-		board[final_p.getRank() - '1'][final_p.getFile() - 'A'] = board[p.getRank() - '1'][p.getFile() - 'A'];
-		board[p.getRank() - '1'][p.getFile() - 'A'] = NULL;
+		if(gm.checkTurn(board[p.getRank() - '1'][p.getFile() - 'A'])){
+			board[final_p.getRank() - '1'][final_p.getFile() - 'A'] = board[p.getRank() - '1'][p.getFile() - 'A'];
+			board[p.getRank() - '1'][p.getFile() - 'A'] = NULL;
+		}
 		return;
 	}
 	cout << "No pieces were found in that position" << endl;
@@ -84,6 +87,8 @@ void ChessBoard::getInitialBoard(const char* FEN_char){
 			pos.move(*FEN_char);
 		FEN_char++;
 	}
+	FEN_char++; // Get to the turn information
+	gm.setTurn(*FEN_char); // Send the turn information to the game manager
 }
 
 // I NEED TO IMPLEMENT A DESTRUCTOR AS I AM CREATING PIECES IN THE HEAP

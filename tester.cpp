@@ -22,8 +22,17 @@ int main() {
 	cout << "\nAFTER THE CHANGE" << std::endl;
 	cout << '\n';
 	cb.displayPieces();
-	cb.submitMove("C3", "E5");
+	cb.submitMove("C3", "E4"); // Make sure that white cannot move again
 	cout << "\nAFTER THE CHANGE" << std::endl;
 	cout << '\n';
 	cb.displayPieces();
+	cb.submitMove("A7", "A5"); 
+	cout << "\nAFTER THE CHANGE" << std::endl;
+	cout << '\n';
+	cb.displayPieces();
+	cb.submitMove("E2", "E4"); 
+	cout << "\nAFTER THE CHANGE" << std::endl;
+	cout << '\n';
+	cb.displayPieces();
+
 }

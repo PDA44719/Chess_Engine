@@ -11,7 +11,7 @@ class ChessBoard {
         public:
 		 	ChessBoard();
 			void loadState(const char*);
-			void submitMove(char[2], char[2]);
+			void submitMove(const char[2], const char[2]);
 			void getInitialBoard(const char*);
 			void displayPieces();
 			void createPiece(char, Position);

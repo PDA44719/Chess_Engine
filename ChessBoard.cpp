@@ -71,14 +71,20 @@ void ChessBoard::createPiece(char type, Position p){
 	}
 }
 
-void ChessBoard::submitMove(char initial_position[2], char final_position[2]){
+void ChessBoard::submitMove(const char initial_position[2], const char final_position[2]){
 	Position p(initial_position);
 	Position final_p(final_position);
 	Move m = final_p - p;
-	if (board[p.getRank() - '1'][p.getFile() - 'A'] != NULL){
-		if(gm.checkTurn(board[p.getRank() - '1'][p.getFile() - 'A'])){
+	if ((*this)[p]){
+		if(gm.checkTurn((*this)[p])){
 			// This would be the checkValidMove method
 			Move* valid_move = (*this)[p]->getValidMoves();
+			// Print the valid moves
+			cout << endl << endl;
+			cout << (*this)[p]->getValidMovesSize() << endl;
+			for (int j=0; j<(*this)[p]->getValidMovesSize(); j++)
+				cout << valid_move[j] << "   ";
+
 			bool is_valid = false;
 			for (int i=0; i<(*this)[p]->getValidMovesSize(); i++){
 				if (m == *valid_move)
@@ -88,6 +94,7 @@ void ChessBoard::submitMove(char initial_position[2], char final_position[2]){
 			if (is_valid) {
 				board[final_p.getRank() - '1'][final_p.getFile() - 'A'] = board[p.getRank() - '1'][p.getFile() - 'A'];
 				board[p.getRank() - '1'][p.getFile() - 'A'] = NULL;
+				gm.updateTurn();
 			} else {
 				cout << "\nThe move was invalid" << endl;
 			}

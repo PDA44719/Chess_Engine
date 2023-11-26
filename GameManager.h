@@ -11,8 +11,9 @@ class GameManager {
             GameManager(ChessBoard*);
             void setTurn(char);
             bool checkTurn(Piece*); // Determine whose turn it is to move 
+            void updateTurn();
             //bool checkValidPawnMove(Color, Position);
-		private:
+      private:
             ChessBoard* cb;
             Color turn; 
 };

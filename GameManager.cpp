@@ -16,6 +16,9 @@ bool GameManager::checkTurn(Piece* to_be_moved) {
     return false;
 }
 
+void GameManager::updateTurn() {
+    turn = turn == WHITE ? BLACK : WHITE; // Change the colour of the turn
+}
 //bool GameManager::checkValidPawnMove(Color pawn_color, Position inital_position, Position final_position){
 //    if (pawn_color == WHITE) {
 //        if (inital_position.getRank()-'0' == 2, final_position.getFile() == inital_position.getFile()){

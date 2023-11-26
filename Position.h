@@ -1,7 +1,7 @@
 #ifndef POSITION_H
 #define POSITION_H
 #include<iostream>
-
+#include "Move.h"
 			
 class Position {
 
@@ -10,6 +10,7 @@ class Position {
 			bool operator==(const Position&) const;
 			bool operator!=(const Position&) const;
 			void operator=(const Position&);
+			Move operator-(const Position&);
 			friend std::ostream& operator << (std::ostream&, const Position&);
 			void move(char);
 			char getFile();

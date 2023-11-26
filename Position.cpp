@@ -17,6 +17,10 @@ void Position::operator=(const Position& updated_position){
 	piece_rank = updated_position.piece_rank;
 }
 
+Move Position::operator-(const Position& p){
+	return Move(piece_file - p.piece_file, piece_rank - p.piece_rank);
+}
+
 ostream& operator<<(ostream &o, const Position& p){
 	o << p.piece_file << p.piece_rank;
 	return o;

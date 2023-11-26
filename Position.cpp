@@ -2,7 +2,7 @@
 #include "Position.h"
 using namespace std;
 
-Position::Position(char* position): piece_file(position[0]), piece_rank(position[1]){};
+Position::Position(const char* position): piece_file(position[0]), piece_rank(position[1]){};
 
 bool Position::operator==(const Position& p2) const{
 	return piece_file == p2.piece_file && piece_rank == p2.piece_rank;

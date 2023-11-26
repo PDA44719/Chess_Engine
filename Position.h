@@ -6,7 +6,7 @@
 class Position {
 
         public:
-			Position(char*);
+			Position(const char*);
 			bool operator==(const Position&) const;
 			bool operator!=(const Position&) const;
 			void operator=(const Position&);

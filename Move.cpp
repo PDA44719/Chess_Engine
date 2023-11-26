@@ -11,4 +11,10 @@ ostream& operator << (ostream& o, const Move& m){
 
 bool Move::operator==(const Move& m) const {
     return file_move == m.file_move && rank_move == m.rank_move;
+
+}
+
+void Move::operator*(const int& multiplier){
+    file_move *= multiplier;
+    rank_move *= multiplier;
 }

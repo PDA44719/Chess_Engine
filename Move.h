@@ -8,6 +8,7 @@ class Move {
             Move(int f_move, int r_move);
 			friend std::ostream& operator << (std::ostream&, const Move&);
             bool operator==(const Move&) const;
+			void operator*(const int&);
 		private:
 			int file_move; 
 			int rank_move; 

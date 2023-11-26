@@ -1,9 +1,14 @@
-
 #include<iostream>
 #include "Pawn.h"
+#include "Move.h"
 using namespace std;
 
-Pawn::Pawn(char type) : Piece(type){}
+Pawn::Pawn(char type) : Piece(type){
+	if (colour == BLACK){
+		for (int i=0; i<valid_moves_size; i++)
+			valid_moves[i]*(-1);
+	}
+}
 
 void Pawn::getType(){
 	//cout << colour << " pawn at poisition " << position << endl; 
@@ -14,11 +19,11 @@ void Pawn::getType(){
 }
 
 int Pawn::getValidMovesSize() {
-	return 0;
+	return valid_moves_size;
 }
 
 Move* Pawn::getValidMoves() {
-	return NULL;
+	return &valid_moves[0];
 }
 
 //ostream& operator<<(ostream& o, Pawn k){

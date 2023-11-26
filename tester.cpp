@@ -17,8 +17,12 @@ int main() {
 	cb.displayPieces();
 
 	//cb.submitMove("D7", "D6");
-	cb.submitMove("D7", "D6");
-	//cb.submitMove("E2", "E4");
+	//cb.submitMove("D7", "D6");
+	cb.submitMove("B1", "C3");
+	cout << "\nAFTER THE CHANGE" << std::endl;
+	cout << '\n';
+	cb.displayPieces();
+	cb.submitMove("C3", "E5");
 	cout << "\nAFTER THE CHANGE" << std::endl;
 	cout << '\n';
 	cb.displayPieces();

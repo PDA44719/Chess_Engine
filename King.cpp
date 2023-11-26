@@ -13,6 +13,14 @@ void King::getType(){
 		cout << "♚";
 }
 
+int King::getValidMovesSize() {
+	return 0;
+}
+
+Move* King::getValidMoves() {
+	return NULL;
+}
+
 //ostream& operator<<(ostream& o, Knight k){
 	//o << "Knight at position " << position << endl;
 //}

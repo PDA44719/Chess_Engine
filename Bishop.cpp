@@ -13,6 +13,14 @@ void Bishop::getType(){
 		cout << "♝";
 }
 
+int Bishop::getValidMovesSize() {
+	return 0;
+}
+
+Move* Bishop::getValidMoves() {
+	return NULL;
+}
+
 //ostream& operator<<(ostream& o, Bishop k){
 	//o << "Bishop at position " << position << endl;
 //}

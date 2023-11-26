@@ -7,6 +7,8 @@ class Bishop : public Piece {
 	public:
 		Bishop(char type);
 		void getType() override;
+		int getValidMovesSize() override;
+		Move* getValidMoves() override;
 };
 
 #endif

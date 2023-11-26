@@ -16,6 +16,8 @@ class Piece {
 			Piece(char piece_type);
 			//void getPosition();
 			virtual void getType() = 0;
+			virtual Move* getValidMoves() = 0;
+			virtual int getValidMovesSize() = 0;
 			void setColour();
 			Color getColour();
         protected:

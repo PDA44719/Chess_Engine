@@ -13,6 +13,14 @@ void Pawn::getType(){
 		cout << "♟︎";
 }
 
+int Pawn::getValidMovesSize() {
+	return 0;
+}
+
+Move* Pawn::getValidMoves() {
+	return NULL;
+}
+
 //ostream& operator<<(ostream& o, Pawn k){
 	//o << "Pawn at position " << position << endl;
 //}

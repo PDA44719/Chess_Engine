@@ -13,6 +13,14 @@ void Queen::getType(){
 		cout << "♛";
 }
 
+int Queen::getValidMovesSize() {
+	return 0;
+}
+
+Move* Queen::getValidMoves() {
+	return NULL;
+}
+
 //ostream& operator<<(ostream& o, Queen k){
 	//o << "Queen at position " << position << endl;
 //}

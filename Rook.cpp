@@ -13,6 +13,14 @@ void Rook::getType(){
 		cout << "♜";
 }
 
+int Rook::getValidMovesSize() {
+	return 0;
+}
+
+Move* Rook::getValidMoves() {
+	return NULL;
+}
+
 //ostream& operator<<(ostream& o, Rook k){
 	//o << "Rook at position " << position << endl;
 //}

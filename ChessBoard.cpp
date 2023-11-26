@@ -1,4 +1,6 @@
 #include<iostream>
+#include<type_traits>
+#include<typeinfo>
 #include "ChessBoard.h"
 #include "Piece.h"
 #include "King.h"
@@ -33,32 +35,35 @@ void ChessBoard::displayPieces(){
 	}
 }
 
+Piece*& ChessBoard::operator[](Position p){
+	return board[p.getRank() - '1'][p.getFile() - 'A'];
+}
 
 void ChessBoard::createPiece(char type, Position p){
 	switch(type){
 		case 'r':
 		case 'R':
-			board[p.getRank() - '1'][p.getFile() - 'A'] = new Rook(type);
+			(*this)[p] = new Rook(type);
 			break;
 		case 'k':
 		case 'K':
-			board[p.getRank() - '1'][p.getFile() - 'A'] = new King(type);
+			(*this)[p] = new King(type);
 			break;
 		case 'q':
 		case 'Q':
-			board[p.getRank() - '1'][p.getFile() - 'A'] = new Queen(type);
+			(*this)[p] = new Queen(type);
 			break;
 		case 'b':
 		case 'B':
-			board[p.getRank() - '1'][p.getFile() - 'A'] = new Bishop(type);
+			(*this)[p] = new Bishop(type);
 			break;
 		case 'p':
 		case 'P':
-			board[p.getRank() - '1'][p.getFile() - 'A'] = new Pawn(type);
+			(*this)[p] = new Pawn(type);
 			break;
 		case 'n':
 		case 'N':
-			board[p.getRank() - '1'][p.getFile() - 'A'] = new Knight(type);
+			(*this)[p] = new Knight(type);
 			break;
 			
 	}

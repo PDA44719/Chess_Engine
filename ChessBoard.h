@@ -15,6 +15,7 @@ class ChessBoard {
 			void getInitialBoard(const char*);
 			void displayPieces();
 			void createPiece(char, Position);
+			Piece*& operator[](Position);
         private:
 			Piece* board[8][8] = {}; // Initialize all the pointers to NULL
 			GameManager gm;

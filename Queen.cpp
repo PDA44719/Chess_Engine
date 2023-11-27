@@ -14,11 +14,11 @@ void Queen::getType(){
 }
 
 int Queen::getValidMovesSize() {
-	return 0;
+	return valid_moves_size;
 }
 
 Move* Queen::getValidMoves() {
-	return NULL;
+	return &valid_moves[0];
 }
 
 //ostream& operator<<(ostream& o, Queen k){

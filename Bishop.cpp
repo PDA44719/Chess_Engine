@@ -14,11 +14,11 @@ void Bishop::getType(){
 }
 
 int Bishop::getValidMovesSize() {
-	return 0;
+	return valid_moves_size;
 }
 
 Move* Bishop::getValidMoves() {
-	return NULL;
+	return &valid_moves[0];
 }
 
 //ostream& operator<<(ostream& o, Bishop k){

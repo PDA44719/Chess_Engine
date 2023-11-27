@@ -9,6 +9,9 @@ class Bishop : public Piece {
 		void getType() override;
 		int getValidMovesSize() override;
 		Move* getValidMoves() override;
+	private:
+	 	int valid_moves_size = 1;
+		Move valid_moves[1] = {Move(100,100)};
 };
 
 #endif

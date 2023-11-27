@@ -14,11 +14,11 @@ void Rook::getType(){
 }
 
 int Rook::getValidMovesSize() {
-	return 0;
+	return valid_moves_size;
 }
 
 Move* Rook::getValidMoves() {
-	return NULL;
+	return &valid_moves[0];
 }
 
 //ostream& operator<<(ostream& o, Rook k){

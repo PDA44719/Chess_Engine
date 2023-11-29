@@ -14,11 +14,11 @@ void King::getType(){
 }
 
 int King::getValidMovesSize() {
-	return 0;
+	return valid_moves_size;
 }
 
 Move* King::getValidMoves() {
-	return NULL;
+	return &valid_moves[0];
 }
 
 //ostream& operator<<(ostream& o, Knight k){

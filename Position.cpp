@@ -17,7 +17,7 @@ void Position::operator=(const Position& updated_position){
 	piece_rank = updated_position.piece_rank;
 }
 
-Move Position::operator-(const Position& p){
+Move Position::operator-(const Position& p) const{
 	return Move(piece_file - p.piece_file, piece_rank - p.piece_rank);
 }
 

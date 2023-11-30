@@ -10,7 +10,7 @@ class Position {
 			bool operator==(const Position&) const;
 			bool operator!=(const Position&) const;
 			void operator=(const Position&);
-			Move operator-(const Position&);
+			Move operator-(const Position&) const;
 			Position operator+(const Move&);
 			friend std::ostream& operator << (std::ostream&, const Position&);
 			void move(char);

@@ -16,8 +16,6 @@ class ChessBoard {
 			void displayPieces();
 			void createPiece(char, Position);
 			Piece*& operator[](Position);
-			bool sameColorPieceAtDestination(Position, Position);
-			bool pieceInThePath(Position, const Position&, const Move&);
         private:
 			Piece* board[8][8] = {}; // Initialize all the pointers to NULL
 			GameManager gm;

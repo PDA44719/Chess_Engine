@@ -74,34 +74,15 @@ void ChessBoard::createPiece(char type, Position p){
 void ChessBoard::submitMove(const char initial_position[2], const char final_position[2]){
 	Position p(initial_position);
 	Position final_p(final_position);
-	Move m = final_p - p;
-	if ((*this)[p]){
-		if(gm.checkTurn((*this)[p]) && !sameColorPieceAtDestination(p, final_p)){
-			// This would be the checkValidMove method
-			Move* valid_move = (*this)[p]->getValidMoves();
-			// Print the valid moves
-			cout << endl << endl;
-			cout << (*this)[p]->getValidMovesSize() << endl;
-			for (int j=0; j<(*this)[p]->getValidMovesSize(); j++)
-				cout << valid_move[j] << "   ";
-
-			bool is_valid = false;
-			for (int i=0; i<(*this)[p]->getValidMovesSize(); i++){
-				if (m == *valid_move)
-					is_valid = true;
-				valid_move++; // Go to the next valid move
-			}
-			if (is_valid && !pieceInThePath(p, final_p, m.getDirection())) {
-				board[final_p.getRank() - '1'][final_p.getFile() - 'A'] = board[p.getRank() - '1'][p.getFile() - 'A'];
-				board[p.getRank() - '1'][p.getFile() - 'A'] = NULL;
-				gm.updateTurn();
-			} else {
-				cout << "\nThe move was invalid" << endl;
-			}
-		}
+	Move m = final_p - p; 
+	if (!gm.isMoveValid(p, final_p))
 		return;
-	}
-	cout << "No pieces were found in that position" << endl;
+
+	if (!gm.pieceInThePath(p, final_p, m.getDirection())) {
+		(*this)[final_p] = (*this)[p];
+		(*this)[p] = NULL;
+		gm.updateTurn();
+	} 	
 }
 
 void ChessBoard::getInitialBoard(const char* FEN_char){
@@ -116,34 +97,6 @@ void ChessBoard::getInitialBoard(const char* FEN_char){
 	}
 	FEN_char++; // Get to the turn information
 	gm.setTurn(*FEN_char); // Send the turn information to the game manager
-}
-
-bool ChessBoard::sameColorPieceAtDestination(Position starting, Position destination) {
-    if ((*this)[destination] && (*this)[destination]->getColour() == (*this)[starting]->getColour()){
-		(*this)[starting]->getType();
-        cerr << " cannot move from " << starting << " to "  << destination << " as ";
-		(*this)[destination]->getType();
-		cerr << " is already present at that position" << endl;
-        return true;
-    }
-    return false;
-}
-
-bool ChessBoard::pieceInThePath(Position starting, const Position& destination, const Move& m){
-	Position next_pos = starting + m;
-	while (next_pos!=destination){
-		cout << next_pos << endl;
-		if ((*this)[next_pos] != NULL){
-			(*this)[starting]->getType();
-			cerr << " cannot move from " << starting << " to " << destination << " as there is a ";
-			(*this)[next_pos]->getType();
-			cerr << " at position " << next_pos;
-			return true;
-		}
-		next_pos = next_pos + m;
-	}
-	return false;
-
 }
 
 // I NEED TO IMPLEMENT A DESTRUCTOR AS I AM CREATING PIECES IN THE HEAP

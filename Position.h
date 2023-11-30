@@ -11,6 +11,7 @@ class Position {
 			bool operator!=(const Position&) const;
 			void operator=(const Position&);
 			Move operator-(const Position&);
+			Position operator+(const Move&);
 			friend std::ostream& operator << (std::ostream&, const Position&);
 			void move(char);
 			char getFile();

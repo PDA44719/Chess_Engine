@@ -21,6 +21,13 @@ Move Position::operator-(const Position& p){
 	return Move(piece_file - p.piece_file, piece_rank - p.piece_rank);
 }
 
+Position Position::operator+(const Move& m){
+	char resulting_position[2];
+	resulting_position[0] = piece_file + m.file_move;
+	resulting_position[1] = piece_rank + m.rank_move;
+	return Position(&resulting_position[0]);
+}
+
 ostream& operator<<(ostream &o, const Position& p){
 	o << p.piece_file << p.piece_rank;
 	return o;

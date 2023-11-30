@@ -76,7 +76,7 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 	Position final_p(final_position);
 	Move m = final_p - p;
 	if ((*this)[p]){
-		if(gm.checkTurn((*this)[p])){
+		if(gm.checkTurn((*this)[p]) && !sameColorPieceAtDestination(final_p, p)){
 			// This would be the checkValidMove method
 			Move* valid_move = (*this)[p]->getValidMoves();
 			// Print the valid moves
@@ -116,6 +116,17 @@ void ChessBoard::getInitialBoard(const char* FEN_char){
 	}
 	FEN_char++; // Get to the turn information
 	gm.setTurn(*FEN_char); // Send the turn information to the game manager
+}
+
+bool ChessBoard::sameColorPieceAtDestination(Position destination, Position starting) {
+    if ((*this)[destination] && (*this)[destination]->getColour() == (*this)[starting]->getColour()){
+		(*this)[starting]->getType();
+        cerr << " cannot move from " << starting << " to "  << destination << " as ";
+		(*this)[destination]->getType();
+		cerr << " is already present at that position" << endl;
+        return true;
+    }
+    return false;
 }
 
 // I NEED TO IMPLEMENT A DESTRUCTOR AS I AM CREATING PIECES IN THE HEAP

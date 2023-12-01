@@ -16,6 +16,7 @@ class GameManager {
             //bool checkValidPawnMove(Color, Position);
             bool pieceInThePath(Position, const Position&, const Move&);
             bool isMoveValid(const Position&, const Position&);
+            int checkCounter(const Position&);
       private:
             ChessBoard* cb;
             Color turn; 

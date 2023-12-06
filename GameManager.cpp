@@ -38,10 +38,10 @@ bool GameManager::pieceInThePath(Position starting, const Position& destination,
 	while (next_pos!=destination){
 		cout << next_pos << endl;
 		if ((*cb)[next_pos] != NULL){
-			(*cb)[starting]->getType();
-			cerr << " cannot move from " << starting << " to " << destination << " as there is a ";
-			(*cb)[next_pos]->getType();
-			cerr << " at position " << next_pos;
+			//(*cb)[starting]->getType();
+			//cerr << " cannot move from " << starting << " to " << destination << " as there is a ";
+			//(*cb)[next_pos]->getType();
+			//cerr << " at position " << next_pos;
 			return true;
 		}
 		next_pos = next_pos + m;
@@ -56,25 +56,30 @@ bool GameManager::isMoveValid(const Position& p, const Position& final_p){
 			// cb would be the checkValidMove method
 			Move* valid_move = (*cb)[p]->getValidMoves();
 			for (int i=0; i<(*cb)[p]->getValidMovesSize(); i++){
-				cout << "Valid move " << i << " " << valid_move[i] << endl;
+				//cout << "Valid move " << i << " " << valid_move[i] << endl;
 				if (m == valid_move[i]){ 
 				 	if ((*cb)[p]->returnType() == 'P' || (*cb)[p]->returnType() == 'p'){ // If piece is a pawn
 					 	// TODO: EN PASSANT
 					 	// TODO: PAWN PROMOTION
+					 	// TODO: PUT ALL OF THIS INSIDE THE PAWN CLASS, AND MAYBE MAKE IT A FRIEND CLASS
 						// Diagonal move 
 						if (m == Move(1, 1) || m == Move(-1, 1) || m == Move(1, -1) || m == Move(-1, -1)) 
 							return (*cb)[final_p] && (*cb)[final_p]->getColour() != (*cb)[p]->getColour();
 
 						// If move is double
 						if (m == Move(0, 2) || m == Move(0, -2))
-							return (p.getRank() == '2' && final_p.getRank() == '4')
-									|| (p.getRank() == '7' && final_p.getRank() == '5');
+							return (p.getRank() == '2' && final_p.getRank() == '4' && !(*cb)[final_p])
+									|| (p.getRank() == '7' && final_p.getRank() == '5' && !(*cb)[final_p]);
+
+						// If move is single
+						if (m == Move(0, 1) || m == Move(0, -1))
+							return !(*cb)[final_p];
 					}
 					return true;
 				}
 			}
 		}
-        cerr << "The move was invalid" << endl;
+        //cerr << "The move was invalid" << endl;
 		return false;
 	}
 	cout << "No pieces were found in that position" << endl;
@@ -101,6 +106,7 @@ bool GameManager::isCheckMateOrStaleMate(Position& king_pos){
 	int n_moves = (*cb)[king_pos]->getValidMovesSize();
 	Color c = (*cb)[king_pos]->getColour();
 	int initial_number_of_checks = checkCounter(king_pos, c);
+	cout << "The initial number of checks is " << initial_number_of_checks << endl; 
 	// delete (*cb)[king_pos]; // Delete the King (UNCOMMENT THIS AT SOME POINT)
 	//(*cb)[king_pos] = NULL; // Set that pointer to NULL
 	
@@ -122,8 +128,9 @@ bool GameManager::isCheckMateOrStaleMate(Position& king_pos){
 			if (n_of_checks == 0){ // A valid move that leads to a safe position was found
 				return false;
 			}
-		}
+		} 
 	}
+	cout << "I DETECTED THAT THE KING CANNOT MOVE" << endl;
 	// If the number of checks is greater than 1, nothing else needs to be checked
 	if (initial_number_of_checks > 1) {
 		return true; 
@@ -137,7 +144,25 @@ bool GameManager::isCheckMateOrStaleMate(Position& king_pos){
 					if (isMoveValid(p, j)
 							&& !sameColorPieceAtDestination(p_color, j) 
 							&& !pieceInThePath(p, j, (j-p).getDirection())){
-						return false;
+						//cout << "The move that prevented stalemate is: ";
+						//cout << "p = " << p;
+						//cout << "j = " << j << endl;
+
+						// Make the move
+						Piece* piece = (*cb)[j];
+						(*cb)[j] = (*cb)[p];
+						(*cb)[p] = NULL;
+
+						int checks_after_move(checkCounter(king_pos, c));
+
+						// Undo the move
+						(*cb)[p] = (*cb)[j];
+						(*cb)[j] = piece;
+
+						// If after making the move, there are no checks
+						if (checks_after_move == 0){
+							return false;
+						}
 					}
 				}
 			}

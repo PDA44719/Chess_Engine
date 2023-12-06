@@ -12,11 +12,12 @@ class GameManager {
             void setTurn(char);
             bool checkTurn(Piece*); // Determine whose turn it is to move 
             void updateTurn();
-            bool sameColorPieceAtDestination(Position, Position);
+            bool sameColorPieceAtDestination(Color, Position);
             //bool checkValidPawnMove(Color, Position);
             bool pieceInThePath(Position, const Position&, const Move&);
             bool isMoveValid(const Position&, const Position&);
-            int checkCounter(const Position&);
+            int checkCounter(const Position&, Color);
+            bool isCheckMate(const int&, Position&);
       private:
             ChessBoard* cb;
             Color turn; 

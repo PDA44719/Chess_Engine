@@ -2,7 +2,16 @@
 #include "Position.h"
 using namespace std;
 
-Position::Position(const char* position): piece_file(position[0]), piece_rank(position[1]){};
+Position::Position(const char* position){
+	// If position is out of bounds
+	if (position[0]<'A' || position[0] > 'H' || position[1] < '1' || position[1] > '8'){
+		piece_file = 'X';
+		piece_rank = 'X';
+	} else { // Valid position
+		piece_file = position[0];
+		piece_rank = position[1];
+	}
+};
 
 bool Position::operator==(const Position& p2) const{
 	return piece_file == p2.piece_file && piece_rank == p2.piece_rank;
@@ -54,4 +63,14 @@ void Position::move(char c){
 		piece_rank--;
 		piece_file += step - 8;
 	}
+
+	// Invalidate the position if out of bounds
+	if (piece_rank < '1') {
+		piece_file = 'X';
+		piece_rank = 'X';
+	}
+}
+
+bool Position::isValid() {
+	return piece_file != 'X' && piece_rank != 'X';
 }

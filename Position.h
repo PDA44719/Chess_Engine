@@ -16,6 +16,7 @@ class Position {
 			void move(char);
 			char getFile();
 			char getRank();
+			bool isValid();
 		private:
 			char piece_file; 
 			char piece_rank; 

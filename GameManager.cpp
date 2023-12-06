@@ -57,8 +57,21 @@ bool GameManager::isMoveValid(const Position& p, const Position& final_p){
 			Move* valid_move = (*cb)[p]->getValidMoves();
 			for (int i=0; i<(*cb)[p]->getValidMovesSize(); i++){
 				cout << "Valid move " << i << " " << valid_move[i] << endl;
-				if (m == valid_move[i]) 
+				if (m == valid_move[i]){ 
+				 	if ((*cb)[p]->returnType() == 'P' || (*cb)[p]->returnType() == 'p'){ // If piece is a pawn
+					 	// TODO: EN PASSANT
+					 	// TODO: PAWN PROMOTION
+						// Diagonal move 
+						if (m == Move(1, 1) || m == Move(-1, 1) || m == Move(1, -1) || m == Move(-1, -1)) 
+							return (*cb)[final_p] && (*cb)[final_p]->getColour() != (*cb)[p]->getColour();
+
+						// If move is double
+						if (m == Move(0, 2) || m == Move(0, -2))
+							return (p.getRank() == '2' && final_p.getRank() == '4')
+									|| (p.getRank() == '7' && final_p.getRank() == '5');
+					}
 					return true;
+				}
 			}
 		}
         cerr << "The move was invalid" << endl;
@@ -83,10 +96,11 @@ int GameManager::checkCounter(const Position& king_pos, Color king_color){
 	return number_of_checks;
 }
 
-bool GameManager::isCheckMate(const int& number_of_checks, Position& king_pos){
+bool GameManager::isCheckMateOrStaleMate(Position& king_pos){
 	Move *valid_move = (*cb)[king_pos]->getValidMoves(); 
 	int n_moves = (*cb)[king_pos]->getValidMovesSize();
 	Color c = (*cb)[king_pos]->getColour();
+	int initial_number_of_checks = checkCounter(king_pos, c);
 	// delete (*cb)[king_pos]; // Delete the King (UNCOMMENT THIS AT SOME POINT)
 	//(*cb)[king_pos] = NULL; // Set that pointer to NULL
 	
@@ -105,12 +119,32 @@ bool GameManager::isCheckMate(const int& number_of_checks, Position& king_pos){
 			(*cb)[king_pos] = (*cb)[new_king_pos]; 
 			(*cb)[new_king_pos] = piece_at_new_king_pos; 
 
-			if (n_of_checks == 0){
+			if (n_of_checks == 0){ // A valid move that leads to a safe position was found
 				return false;
 			}
 		}
 	}
-	//if (number_of_checks > 1) {
+	// If the number of checks is greater than 1, nothing else needs to be checked
+	if (initial_number_of_checks > 1) {
+		return true; 
+	}
+
+	if (initial_number_of_checks == 0) {
+		for (Position p("A8"); p!=("XX"); p.move('1')){
+			if ((*cb)[p] && p!=king_pos && (*cb)[p]->getColour() == c){
+				for (Position j("A8"); j!=("XX"); j.move('1')){
+					Color p_color = (*cb)[p]->getColour();
+					if (isMoveValid(p, j)
+							&& !sameColorPieceAtDestination(p_color, j) 
+							&& !pieceInThePath(p, j, (j-p).getDirection())){
+						return false;
+					}
+				}
+			}
+		}
+		cout << "Stalemate was found" << endl;
+		return true; // No valid moves were found
+	}
 	return true;
-	//}
+
 }

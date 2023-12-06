@@ -17,7 +17,7 @@ class GameManager {
             bool pieceInThePath(Position, const Position&, const Move&);
             bool isMoveValid(const Position&, const Position&);
             int checkCounter(const Position&, Color);
-            bool isCheckMate(const int&, Position&);
+            bool isCheckMateOrStaleMate(Position&);
       private:
             ChessBoard* cb;
             Color turn; 

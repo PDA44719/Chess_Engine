@@ -38,3 +38,4 @@ void Piece::setColour(){
 Color Piece::getColour(){
         return colour;
 }
+

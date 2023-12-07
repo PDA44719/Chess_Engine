@@ -21,6 +21,13 @@ Move* Rook::getValidMoves() {
 	return &valid_moves[0];
 }
 
+char Rook::returnType(){
+	if (colour == WHITE)
+		return 'R';
+	else
+		return 'r';
+}
+
 //ostream& operator<<(ostream& o, Rook k){
 	//o << "Rook at position " << position << endl;
 //}

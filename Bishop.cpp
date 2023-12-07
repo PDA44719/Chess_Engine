@@ -21,6 +21,13 @@ Move* Bishop::getValidMoves() {
 	return &valid_moves[0];
 }
 
+char Bishop::returnType() {
+	if (colour == WHITE)
+		return 'B';
+	else
+		return 'b';
+}
+
 //ostream& operator<<(ostream& o, Bishop k){
 	//o << "Bishop at position " << position << endl;
 //}

@@ -7,6 +7,7 @@ class King : public Piece {
 	public:
 		King(char type);
 		void getType() override;
+		char returnType() override;
 		int getValidMovesSize() override;
 		Move* getValidMoves() override;
 	private:

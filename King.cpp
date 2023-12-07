@@ -21,6 +21,13 @@ Move* King::getValidMoves() {
 	return &valid_moves[0];
 }
 
+char King::returnType(){
+	//cout << colour << " king at poisition " << position << endl; 
+	if (colour == WHITE)
+		return 'K';
+	else
+		return 'k';
+}
 //ostream& operator<<(ostream& o, Knight k){
 	//o << "Knight at position " << position << endl;
 //}

@@ -7,6 +7,7 @@ class Pawn : public Piece {
 	public:
 		Pawn(char type);
 		void getType() override;
+		char returnType() override;
 		int getValidMovesSize() override;
 		Move* getValidMoves() override;
 

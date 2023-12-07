@@ -7,6 +7,7 @@ class Knight : public Piece {
 	public:
 		Knight(char type);
 		void getType() override;
+		char returnType() override;
 		int getValidMovesSize();
 		Move* getValidMoves();
 	private:

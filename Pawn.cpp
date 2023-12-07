@@ -1,6 +1,8 @@
 #include<iostream>
 #include "Pawn.h"
 #include "Move.h"
+#include "ChessBoard.h"
+class ChessBoard;
 using namespace std;
 
 Pawn::Pawn(char type) : Piece(type){
@@ -24,6 +26,13 @@ int Pawn::getValidMovesSize() {
 
 Move* Pawn::getValidMoves() {
 	return &valid_moves[0];
+}
+
+char Pawn::returnType(){
+	if (colour == WHITE)
+		return 'P';
+	else
+		return 'p';
 }
 
 //ostream& operator<<(ostream& o, Pawn k){

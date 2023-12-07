@@ -24,3 +24,10 @@ Move* Queen::getValidMoves() {
 //ostream& operator<<(ostream& o, Queen k){
 	//o << "Queen at position " << position << endl;
 //}
+
+char Queen::returnType() {
+	if (colour == WHITE)
+		return 'Q';
+	else
+		return 'q';
+}

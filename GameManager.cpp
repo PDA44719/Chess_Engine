@@ -102,74 +102,49 @@ int GameManager::checkCounter(const Position& king_pos, Color king_color){
 }
 
 bool GameManager::isCheckMateOrStaleMate(Position& king_pos){
-	Move *valid_move = (*cb)[king_pos]->getValidMoves(); 
-	int n_moves = (*cb)[king_pos]->getValidMovesSize();
 	Color c = (*cb)[king_pos]->getColour();
 	int initial_number_of_checks = checkCounter(king_pos, c);
-	cout << "The initial number of checks is " << initial_number_of_checks << endl; 
-	// delete (*cb)[king_pos]; // Delete the King (UNCOMMENT THIS AT SOME POINT)
-	//(*cb)[king_pos] = NULL; // Set that pointer to NULL
 	
-	// Try to find a valid move where there are no checks
-	for (int i=0; i<n_moves; i++){
-		Position new_king_pos = king_pos + valid_move[i];
-		if (new_king_pos.isValid() && !sameColorPieceAtDestination(c, new_king_pos)){
-			// Make move and store the piece at the new king pos in another variable
-			Piece* piece_at_new_king_pos = (*cb)[new_king_pos];
-			(*cb)[new_king_pos] = (*cb)[king_pos];
-			(*cb)[king_pos] = NULL;
-
-			cout << new_king_pos << endl;
-			int n_of_checks = checkCounter(new_king_pos, c);
-			// Return pieces to the original position
-			(*cb)[king_pos] = (*cb)[new_king_pos]; 
-			(*cb)[new_king_pos] = piece_at_new_king_pos; 
-
-			if (n_of_checks == 0){ // A valid move that leads to a safe position was found
-				return false;
-			}
-		} 
-	}
-	cout << "I DETECTED THAT THE KING CANNOT MOVE" << endl;
-	// If the number of checks is greater than 1, nothing else needs to be checked
-	if (initial_number_of_checks > 1) {
-		return true; 
-	}
-
-	if (initial_number_of_checks == 0) {
-		for (Position p("A8"); p!=("XX"); p.move('1')){
-			if ((*cb)[p] && p!=king_pos && (*cb)[p]->getColour() == c){
-				for (Position j("A8"); j!=("XX"); j.move('1')){
+	for (Position p("A8"); p!=("XX"); p.move('1')){
+		if ((*cb)[p] && (*cb)[p]->getColour() == c){
+			for (Position j("A8"); j!=("XX"); j.move('1')){
+				if (j != p){
 					Color p_color = (*cb)[p]->getColour();
 					if (isMoveValid(p, j)
 							&& !sameColorPieceAtDestination(p_color, j) 
 							&& !pieceInThePath(p, j, (j-p).getDirection())){
-						//cout << "The move that prevented stalemate is: ";
-						//cout << "p = " << p;
-						//cout << "j = " << j << endl;
 
 						// Make the move
-						Piece* piece = (*cb)[j];
+						Piece* tmp = (*cb)[j];
 						(*cb)[j] = (*cb)[p];
 						(*cb)[p] = NULL;
 
-						int checks_after_move(checkCounter(king_pos, c));
+						int checks_after_move;
+						if ((*cb)[j]->returnType() == 'k')
+							checks_after_move = checkCounter(j, c);
+						else
+							checks_after_move = checkCounter(king_pos, c);
 
 						// Undo the move
 						(*cb)[p] = (*cb)[j];
-						(*cb)[j] = piece;
+						(*cb)[j] = tmp;
 
 						// If after making the move, there are no checks
 						if (checks_after_move == 0){
+							cout << "The position that prevented checkmate is: " << p << endl;
 							return false;
 						}
 					}
 				}
 			}
 		}
-		cout << "Stalemate was found" << endl;
-		return true; // No valid moves were found
 	}
-	return true;
+	if (initial_number_of_checks == 0) { // If there were no checks initially
+		cout << "Stalemate" << endl;
+		return true; 
+	}
 
+	// There was at least one check initially
+	cout << c << " is in checkmate" << endl;
+	return true; // No valid moves were found
 }

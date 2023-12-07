@@ -16,9 +16,13 @@ class ChessBoard {
 			void displayPieces();
 			void createPiece(char, Position);
 			Piece*& operator[](Position);
+			Position getKingPosition(Color);
+			GameManager gm;
         private:
 			Piece* board[8][8] = {}; // Initialize all the pointers to NULL
-			GameManager gm;
+			Position black_king_pos;
+			Position white_king_pos;
+			//GameManager gm;
 };
 
 #endif

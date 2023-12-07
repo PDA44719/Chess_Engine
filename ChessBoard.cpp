@@ -20,7 +20,8 @@ void ChessBoard::loadState(const char* FEN_string){
 
 void ChessBoard::displayPieces(){
 	cout << "  A B C D E F G H\n";
-	for (Position p("A8"); p!=Position("A0"); p.move('1')){
+	// Loop until invalid position reached
+	for (Position p("A8"); p!=Position("XX"); p.move('1')){
 		if (p.getFile() == 'A')
 			cout << p.getRank() << " ";
 		if (board[p.getRank() - '1'][p.getFile() - 'A'] != NULL){
@@ -46,7 +47,13 @@ void ChessBoard::createPiece(char type, Position p){
 			(*this)[p] = new Rook(type);
 			break;
 		case 'k':
+			cout << "Black king pos is: " << p << endl;
+			black_king_pos = p;
+			(*this)[p] = new King(type);
+			break;
 		case 'K':
+			cout << "White king pos is: " << p << endl;
+		 	white_king_pos = p;
 			(*this)[p] = new King(type);
 			break;
 		case 'q':
@@ -72,10 +79,11 @@ void ChessBoard::createPiece(char type, Position p){
 }
 
 void ChessBoard::submitMove(const char initial_position[2], const char final_position[2]){
+	gm.checkCounter(Position("G8"), BLACK); // These values must be changed
 	Position p(initial_position);
 	Position final_p(final_position);
 	Move m = final_p - p; 
-	if (!gm.isMoveValid(p, final_p))
+	if (!(*this)[p] || !gm.checkTurn((*this)[p]) || !gm.isMoveValid(p, final_p)) // Have to check the turn here
 		return;
 
 	if (!gm.pieceInThePath(p, final_p, m.getDirection())) {
@@ -97,6 +105,10 @@ void ChessBoard::getInitialBoard(const char* FEN_char){
 	}
 	FEN_char++; // Get to the turn information
 	gm.setTurn(*FEN_char); // Send the turn information to the game manager
+}
+
+Position ChessBoard::getKingPosition(Color king_color) {
+	return king_color == BLACK ? black_king_pos : white_king_pos;
 }
 
 // I NEED TO IMPLEMENT A DESTRUCTOR AS I AM CREATING PIECES IN THE HEAP

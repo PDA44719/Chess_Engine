@@ -101,12 +101,12 @@ int GameManager::checkCounter(const Position& king_pos, Color king_color){
 	return number_of_checks;
 }
 
-bool GameManager::isCheckMateOrStaleMate(Position& king_pos){
-	Color c = (*cb)[king_pos]->getColour();
-	int initial_number_of_checks = checkCounter(king_pos, c);
+bool GameManager::isCheckMateOrStaleMate(Color king_color){
+	Position king_pos = cb->getKingPosition(king_color);
+	int initial_number_of_checks = checkCounter(king_pos, king_color);
 	
 	for (Position p("A8"); p!=("XX"); p.move('1')){
-		if ((*cb)[p] && (*cb)[p]->getColour() == c){
+		if ((*cb)[p] && (*cb)[p]->getColour() == king_color){
 			for (Position j("A8"); j!=("XX"); j.move('1')){
 				if (j != p){
 					Color p_color = (*cb)[p]->getColour();
@@ -121,9 +121,9 @@ bool GameManager::isCheckMateOrStaleMate(Position& king_pos){
 
 						int checks_after_move;
 						if ((*cb)[j]->returnType() == 'k')
-							checks_after_move = checkCounter(j, c);
+							checks_after_move = checkCounter(j, king_color);
 						else
-							checks_after_move = checkCounter(king_pos, c);
+							checks_after_move = checkCounter(king_pos, king_color);
 
 						// Undo the move
 						(*cb)[p] = (*cb)[j];
@@ -145,6 +145,6 @@ bool GameManager::isCheckMateOrStaleMate(Position& king_pos){
 	}
 
 	// There was at least one check initially
-	cout << c << " is in checkmate" << endl;
+	cout << king_color << " is in checkmate" << endl;
 	return true; // No valid moves were found
 }

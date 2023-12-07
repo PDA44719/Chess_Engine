@@ -13,6 +13,11 @@ Position::Position(const char* position){
 	}
 };
 
+Position::Position(){
+	piece_file = 'X';
+	piece_rank = 'X';
+};
+
 bool Position::operator==(const Position& p2) const{
 	return piece_file == p2.piece_file && piece_rank == p2.piece_rank;
 }
@@ -46,7 +51,7 @@ char Position::getFile(){
 	return piece_file;
 }
 
-char Position::getRank(){
+char Position::getRank() const{
 	return piece_rank;
 }
 

@@ -7,6 +7,7 @@ class Position {
 
         public:
 			Position(const char*);
+			Position();
 			bool operator==(const Position&) const;
 			bool operator!=(const Position&) const;
 			void operator=(const Position&);
@@ -15,7 +16,7 @@ class Position {
 			friend std::ostream& operator << (std::ostream&, const Position&);
 			void move(char);
 			char getFile();
-			char getRank();
+			char getRank() const;
 			bool isValid();
 		private:
 			char piece_file; 

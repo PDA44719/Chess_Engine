@@ -10,9 +10,11 @@ class Rook : public Piece {
 		char returnType() override;
 		int getValidMovesSize() override;
 		Move* getValidMoves() override;
+		bool hasMoved();
 	private:
 	 	int valid_moves_size = 2; 
 		Move valid_moves[2] = {Move(100,0), Move(0,100)};
+		bool has_moved = false;
 };
 
 #endif

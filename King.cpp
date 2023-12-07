@@ -28,6 +28,10 @@ char King::returnType(){
 	else
 		return 'k';
 }
+
+bool King::hasMoved(){
+	return has_moved;
+}
 //ostream& operator<<(ostream& o, Knight k){
 	//o << "Knight at position " << position << endl;
 //}

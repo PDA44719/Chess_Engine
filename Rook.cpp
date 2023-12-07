@@ -28,6 +28,10 @@ char Rook::returnType(){
 		return 'r';
 }
 
+bool Rook::hasMoved(){
+	return has_moved;
+}
+
 //ostream& operator<<(ostream& o, Rook k){
 	//o << "Rook at position " << position << endl;
 //}

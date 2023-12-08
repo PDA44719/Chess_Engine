@@ -25,6 +25,33 @@ void GameManager::updateTurn() {
     turn = turn == WHITE ? BLACK : WHITE; // Change the colour of the turn
 }
 
+void GameManager::setCastlingInformation(const char* castling_char) const {
+	// FIXME: MIGHT WANT TO DO DYNAMIC CAST TO ENSURE THE KING AND QUEEN ARE WHERE THEY ARE SUPPOSED TO
+	while (*castling_char != '\n'){
+		switch(*castling_char){
+			case 'K':
+				static_cast<King*>((*cb)[Position("E1")])->setHasNotMoved();
+				static_cast<Rook*>((*cb)[Position("H1")])->setHasNotMoved();
+				break;
+			case 'Q':
+				static_cast<King*>((*cb)[Position("E1")])->setHasNotMoved();
+				static_cast<Rook*>((*cb)[Position("A1")])->setHasNotMoved();
+				break;
+			case 'k':
+				static_cast<King*>((*cb)[Position("E8")])->setHasNotMoved();
+				static_cast<Rook*>((*cb)[Position("H8")])->setHasNotMoved();
+				break;
+			case 'q':
+				static_cast<King*>((*cb)[Position("E8")])->setHasNotMoved();
+				static_cast<Rook*>((*cb)[Position("A8")])->setHasNotMoved();
+				break;
+			default: // If char is not one of the required ones
+				return;
+		}
+		castling_char++;
+	}
+}
+
 bool GameManager::sameColorPieceAtDestination(Color colour, Position destination) {
     if ((*cb)[destination] && (*cb)[destination]->getColour() == colour){
 		//(*cb)[starting]->getType();

@@ -3,7 +3,9 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
+class Piece;
 #include "Piece.h"
+class GameManager;
 #include "GameManager.h"
 
 class ChessBoard {
@@ -17,6 +19,8 @@ class ChessBoard {
 			void createPiece(char, Position);
 			Piece*& operator[](Position);
 			Position getKingPosition(Color);
+			friend class Pawn;
+			friend class King;
 			GameManager gm;
         private:
 			Piece* board[8][8] = {}; // Initialize all the pointers to NULL

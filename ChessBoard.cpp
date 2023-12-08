@@ -94,6 +94,7 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 }
 
 void ChessBoard::getInitialBoard(const char* FEN_char){
+	// TODO: MUST ENSURE HAS MOVED IS PROPERLY INITIALIZED IN CHESSBOARD
 	Position pos("A8");
 	while (*FEN_char != ' '){
 		if (*FEN_char >= 'A' && *FEN_char <= 'z'){

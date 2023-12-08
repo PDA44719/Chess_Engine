@@ -10,6 +10,7 @@ class King : public Piece {
 		char returnType() override;
 		int getValidMovesSize() override;
 		Move* getValidMoves() override;
+		bool additionalConditionsMet(ChessBoard*, Position, Move);
 		bool hasMoved();
 	private:
 		int valid_moves_size = 10;

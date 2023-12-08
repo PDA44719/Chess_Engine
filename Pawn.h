@@ -2,6 +2,8 @@
 #define PAWN_H
 
 #include "Piece.h"
+#include "ChessBoard.h"
+//class ChessBoard;
 
 class Pawn : public Piece {
 	public:
@@ -10,6 +12,7 @@ class Pawn : public Piece {
 		char returnType() override;
 		int getValidMovesSize() override;
 		Move* getValidMoves() override;
+		bool additionalConditionsMet(ChessBoard*, Position, Move) override;
 
 	private:
 	 	int valid_moves_size = 4;

@@ -17,7 +17,6 @@ void GameManager::setTurn(char color){
 bool GameManager::checkTurn(Piece* to_be_moved) {
     if (to_be_moved->getColour() == turn)
         return true;
-    cerr << "\nIt is not " << to_be_moved->getColour() << "'s turn to move!\n";
     return false;
 }
 
@@ -68,10 +67,6 @@ bool GameManager::pieceInThePath(Position starting, const Position& destination,
 	while (next_pos!=destination){
 		cout << next_pos << endl;
 		if ((*cb)[next_pos] != NULL){
-			//(*cb)[starting]->getType();
-			//cerr << " cannot move from " << starting << " to " << destination << " as there is a ";
-			//(*cb)[next_pos]->getType();
-			//cerr << " at position " << next_pos;
 			return true;
 		}
 		next_pos = next_pos + m;
@@ -85,7 +80,9 @@ bool GameManager::isMoveValid(const Position& p, const Position& final_p){
 		if(!sameColorPieceAtDestination((*cb)[p]->getColour(), final_p)){ // I am no longer checking the turn here
 			Move* valid_move = (*cb)[p]->getValidMoves();
 			for (int i=0; i<(*cb)[p]->getValidMovesSize(); i++){
-				if (m == valid_move[i] && (*cb)[p]->additionalConditionsMet(cb, p, m)){ 
+				if (m == valid_move[i]
+						&& !pieceInThePath(p, final_p, m.getDirection())
+						&& (*cb)[p]->additionalConditionsMet(cb, p, m)){ 
 					return true;
 				}
 			}
@@ -103,6 +100,7 @@ int GameManager::checkCounter(const Position& king_pos, Color king_color){
 			cout << "The position is " << p << endl;
 			Move m = king_pos - p;
 			cout << "The move is " << m << endl;
+			// TODO: I PROBABLY NEED TO CHECK THE ADDITIONAL CONDITIONS HERE AS WELL
 			if (isMoveValid(p, king_pos) && !pieceInThePath(p, king_pos, m.getDirection()))
 				number_of_checks++;
 		}
@@ -130,7 +128,7 @@ bool GameManager::isCheckMateOrStaleMate(Color king_color){
 						(*cb)[p] = NULL;
 
 						int checks_after_move;
-						if ((*cb)[j]->returnType() == 'k')
+						if (dynamic_cast<King*>((*cb)[j])) // Piece that moved is a King
 							checks_after_move = checkCounter(j, king_color);
 						else
 							checks_after_move = checkCounter(king_pos, king_color);

@@ -39,3 +39,6 @@ Color Piece::getColour(){
         return colour;
 }
 
+bool Piece::additionalConditionsMet(ChessBoard*, Position, Move){
+        return true;
+}

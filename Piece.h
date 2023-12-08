@@ -1,12 +1,16 @@
 #ifndef PIECE_H
 #define PIECE_H
 #include<iostream>
-#include "Position.h"
 
 enum Color {
 	WHITE,
 	BLACK
 };
+
+#include "Position.h"
+class ChessBoard;
+#include "ChessBoard.h"
+
 
 std::ostream& operator << (std::ostream&, Color);
 			
@@ -19,6 +23,7 @@ class Piece {
 			virtual char returnType() = 0;
 			virtual Move* getValidMoves() = 0;
 			virtual int getValidMovesSize() = 0;
+			virtual bool additionalConditionsMet(ChessBoard*, Position, Move);
 			void setColour();
 			Color getColour();
         protected:

@@ -32,6 +32,10 @@ bool Rook::hasMoved(){
 	return has_moved;
 }
 
+void Rook::setHasNotMoved(){
+	has_moved = false;
+}
+
 //ostream& operator<<(ostream& o, Rook k){
 	//o << "Rook at position " << position << endl;
 //}

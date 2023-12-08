@@ -106,6 +106,10 @@ void ChessBoard::getInitialBoard(const char* FEN_char){
 	}
 	FEN_char++; // Get to the turn information
 	gm.setTurn(*FEN_char); // Send the turn information to the game manager
+	
+	// Advance FEN_char to castling info and set that info
+	FEN_char = FEN_char+2;  
+	gm.setCastlingInformation(FEN_char);
 }
 
 Position ChessBoard::getKingPosition(Color king_color) {

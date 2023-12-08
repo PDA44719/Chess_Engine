@@ -15,7 +15,22 @@ using namespace std;
 ChessBoard::ChessBoard(): gm(GameManager(this)){}
 
 void ChessBoard::loadState(const char* FEN_string){
-	this->getInitialBoard(FEN_string);
+	Position pos("A8");
+	while (*FEN_string != ' '){
+		if (*FEN_string >= 'A' && *FEN_string <= 'z'){
+			this->createPiece(*FEN_string, pos); // Create the new piece
+		}
+		if (*FEN_string != '/')
+			pos.move(*FEN_string);
+		FEN_string++;
+	}
+	FEN_string++; // Get to the turn information
+	gm.setTurn(*FEN_string); // Send the turn information to the game manager
+	
+	// Advance FEN_char to castling info and set that info
+	FEN_string = FEN_string+2;  
+	gm.setCastlingInformation(FEN_string);
+	cout << "A new board state is loaded!" << endl;
 }
 
 void ChessBoard::displayPieces(){
@@ -47,12 +62,10 @@ void ChessBoard::createPiece(char type, Position p){
 			(*this)[p] = new Rook(type);
 			break;
 		case 'k':
-			cout << "Black king pos is: " << p << endl;
 			black_king_pos = p;
 			(*this)[p] = new King(type);
 			break;
 		case 'K':
-			cout << "White king pos is: " << p << endl;
 		 	white_king_pos = p;
 			(*this)[p] = new King(type);
 			break;
@@ -79,11 +92,22 @@ void ChessBoard::createPiece(char type, Position p){
 }
 
 void ChessBoard::submitMove(const char initial_position[2], const char final_position[2]){
-	gm.checkCounter(Position("G8"), BLACK); // These values must be changed
+	//gm.checkCounter(Position("G8"), BLACK); // These values must be changed
 	Position p(initial_position);
 	Position final_p(final_position);
 	Move m = final_p - p; 
-	if (!(*this)[p] || !gm.checkTurn((*this)[p]) || !gm.isMoveValid(p, final_p)) // Have to check the turn here
+
+	if (!(*this)[p]){
+		cout << "There is no piece at position " << p << "!" << endl;
+		return;
+	}
+	
+	if (!gm.checkTurn((*this)[p])){
+		cout << "\nIt is not " << (*this)[p]->getColour() << "'s turn to move!\n";
+		return;
+	}
+
+	if (!gm.isMoveValid(p, final_p)) 
 		return;
 
 	if (!gm.pieceInThePath(p, final_p, m.getDirection())) {
@@ -91,25 +115,6 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 		(*this)[p] = NULL;
 		gm.updateTurn();
 	} 	
-}
-
-void ChessBoard::getInitialBoard(const char* FEN_char){
-	// TODO: MUST ENSURE HAS MOVED IS PROPERLY INITIALIZED IN CHESSBOARD
-	Position pos("A8");
-	while (*FEN_char != ' '){
-		if (*FEN_char >= 'A' && *FEN_char <= 'z'){
-			this->createPiece(*FEN_char, pos); // Create the new piece
-		}
-		if (*FEN_char != '/')
-			pos.move(*FEN_char);
-		FEN_char++;
-	}
-	FEN_char++; // Get to the turn information
-	gm.setTurn(*FEN_char); // Send the turn information to the game manager
-	
-	// Advance FEN_char to castling info and set that info
-	FEN_char = FEN_char+2;  
-	gm.setCastlingInformation(FEN_char);
 }
 
 Position ChessBoard::getKingPosition(Color king_color) {

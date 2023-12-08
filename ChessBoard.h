@@ -14,7 +14,6 @@ class ChessBoard {
 		 	ChessBoard();
 			void loadState(const char*);
 			void submitMove(const char[2], const char[2]);
-			void getInitialBoard(const char*);
 			void displayPieces();
 			void createPiece(char, Position);
 			Piece*& operator[](Position);

@@ -5,6 +5,7 @@
 #include "Position.h"
 #include "King.h"
 #include "Rook.h"
+#include "Knight.h"
 
 using namespace std;
 
@@ -22,6 +23,10 @@ bool GameManager::checkTurn(Piece* to_be_moved) {
 
 void GameManager::updateTurn() {
     turn = turn == WHITE ? BLACK : WHITE; // Change the colour of the turn
+}
+
+Color GameManager::getTurn() {
+	return turn;
 }
 
 void GameManager::setCastlingInformation(const char* castling_char) const {
@@ -202,8 +207,9 @@ int GameManager::checkCounter(Color king_color){
 
 	for (Position p("A8"); p!=Position("XX"); p.move('1')){
 		if ((*cb)[p] != NULL && (*cb)[p]->getColour()!=king_color){
-			if (isMoveValid(p, king_pos))
+			if (isMoveValid(p, king_pos)){
 				number_of_checks++;
+			}
 		}
 	}
 	//cout << "\nThe number of checks on the board is: " << number_of_checks << endl;
@@ -219,24 +225,25 @@ bool GameManager::isCheckMateOrStaleMate(Color king_color){
 				if (j != p){
 					//Color p_color = (*cb)[p]->getColour();
 					if (isMoveValid(p, j)){ 
-						// Make the move. No need to worry about castling here. If the other potentially valid
-						// moves are not allowed for the King, castling will also not be valid
-						Piece* tmp = (*cb)[j];
-						(*cb)[j] = (*cb)[p];
-						(*cb)[p] = NULL;
+						return false;
+						//// Make the move. No need to worry about castling here. If the other potentially valid
+						//// moves are not allowed for the King, castling will also not be valid
+						//Piece* tmp = (*cb)[j];
+						//(*cb)[j] = (*cb)[p];
+						//(*cb)[p] = NULL;
 
-						int checks_after_move;
-						checks_after_move = checkCounter(king_color);
+						//int checks_after_move;
+						//checks_after_move = checkCounter(king_color);
 
-						// Undo the move
-						(*cb)[p] = (*cb)[j];
-						(*cb)[j] = tmp;
+						//// Undo the move
+						//(*cb)[p] = (*cb)[j];
+						//(*cb)[j] = tmp;
 
-						// If after making the move, there are no checks
-						if (checks_after_move == 0){
-							//cout << "The position that prevented checkmate is: " << p << endl;
-							return false;
-						}
+						//// If after making the move, there are no checks
+						//if (checks_after_move == 0){
+						//	//cout << "The position that prevented checkmate is: " << p << endl;
+						//	return false;
+						//}
 					}
 				}
 			}

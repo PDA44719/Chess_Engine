@@ -12,6 +12,7 @@ class GameManager {
             void setTurn(char);
             bool checkTurn(Piece*); // Determine whose turn it is to move 
             void updateTurn();
+            Color getTurn();
             void setCastlingInformation(const char*) const;
             bool sameColorPieceAtDestination(Color, Position);
             //bool checkValidPawnMove(Color, Position);

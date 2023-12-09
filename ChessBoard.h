@@ -20,6 +20,7 @@ class ChessBoard {
 			Position getKingPosition(Color);
 			friend class Pawn;
 			friend class King;
+			friend class GameManager;
 			GameManager gm;
         private:
 			Piece* board[8][8] = {}; // Initialize all the pointers to NULL

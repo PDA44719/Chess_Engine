@@ -95,7 +95,7 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 	//gm.checkCounter(Position("G8"), BLACK); // These values must be changed
 	Position p(initial_position);
 	Position final_p(final_position);
-	Move m = final_p - p; 
+	//Move m = final_p - p; 
 
 	if (!(*this)[p]){
 		cout << "There is no piece at position " << p << "!" << endl;
@@ -103,18 +103,22 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 	}
 	
 	if (!gm.checkTurn((*this)[p])){
-		cout << "\nIt is not " << (*this)[p]->getColour() << "'s turn to move!\n";
+		cout << "It is not " << (*this)[p]->getColour() << "'s turn to move!\n";
 		return;
 	}
 
-	if (!gm.isMoveValid(p, final_p)) 
+	if (!gm.isMoveValid(p, final_p)){
+		cout << (*this)[p]->returnType() << " cannot move to " << final_p << "!\n";
 		return;
+	}
 
-	if (!gm.pieceInThePath(p, final_p, m.getDirection())) {
-		(*this)[final_p] = (*this)[p];
-		(*this)[p] = NULL;
-		gm.updateTurn();
-	} 	
+
+	Piece* piece_taken = gm.makeMove(p, final_p);
+	gm.updateTurn();
+	cout << (*this)[final_p]->returnType() << " moves from " << p << " to " << final_p;
+	if (piece_taken)
+		cout << " taking " << piece_taken->returnType();
+	cout << endl;
 }
 
 Position ChessBoard::getKingPosition(Color king_color) {

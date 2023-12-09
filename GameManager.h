@@ -17,6 +17,7 @@ class GameManager {
             //bool checkValidPawnMove(Color, Position);
             bool pieceInThePath(Position, const Position&, const Move&);
             bool isMoveValid(const Position&, const Position&);
+            Piece* makeMove(const Position&, const Position&);
             int checkCounter(const Position&, Color);
             bool isCheckMateOrStaleMate(Color);
       private:

@@ -93,6 +93,36 @@ bool GameManager::isMoveValid(const Position& p, const Position& final_p){
     return false;
 }
 
+Piece* GameManager::makeMove(const Position& p, const Position& final_p){
+	Move m = final_p - p;
+	Position initial_rook_pos("XX"); // Position of the rook (only used for casling moves)
+	(*cb)[p]->setHasMoved(); // Specify that the piece will move
+	
+	// If move is castling, get the initial position of the rook 
+	if (m == Move(2, 0) && dynamic_cast<King*>((*cb)[p])) // King side castling
+		initial_rook_pos = (*cb)[p]->getColour() == WHITE ? Position("H1") : Position("H8");
+	if (m == Move(-2, 0) && dynamic_cast<King*>((*cb)[p])) // Queen side castling
+		initial_rook_pos = (*cb)[p]->getColour() == WHITE ? Position("A1") : Position("A8");
+
+	if (initial_rook_pos != Position("XX")){ // Castling move to be made
+		// Move the King to final_p
+		(*cb)[final_p] = (*cb)[p];
+		(*cb)[p] = NULL; 
+
+		// Move the rook to its destination and specify it has moved
+		(*cb)[p+m.getDirection()] = (*cb)[initial_rook_pos];
+		(*cb)[initial_rook_pos] = NULL;
+		(*cb)[p+m.getDirection()]->setHasMoved();
+		return NULL;
+	}
+
+	// If move is not castling
+	Piece* tmp = (*cb)[final_p];
+	(*cb)[final_p] = (*cb)[p];
+	(*cb)[p] = NULL;
+	return tmp;
+}
+
 int GameManager::checkCounter(const Position& king_pos, Color king_color){
 	int number_of_checks = 0;
 	for (Position p("A8"); p!=Position("XX"); p.move('1')){
@@ -100,8 +130,7 @@ int GameManager::checkCounter(const Position& king_pos, Color king_color){
 			cout << "The position is " << p << endl;
 			Move m = king_pos - p;
 			cout << "The move is " << m << endl;
-			// TODO: I PROBABLY NEED TO CHECK THE ADDITIONAL CONDITIONS HERE AS WELL
-			if (isMoveValid(p, king_pos) && !pieceInThePath(p, king_pos, m.getDirection()))
+			if (isMoveValid(p, king_pos))
 				number_of_checks++;
 		}
 	}
@@ -117,12 +146,10 @@ bool GameManager::isCheckMateOrStaleMate(Color king_color){
 		if ((*cb)[p] && (*cb)[p]->getColour() == king_color){
 			for (Position j("A8"); j!=("XX"); j.move('1')){
 				if (j != p){
-					Color p_color = (*cb)[p]->getColour();
-					if (isMoveValid(p, j)
-							&& !sameColorPieceAtDestination(p_color, j) 
-							&& !pieceInThePath(p, j, (j-p).getDirection())){
-
-						// Make the move
+					//Color p_color = (*cb)[p]->getColour();
+					if (isMoveValid(p, j)){ 
+						// Make the move. No need to worry about castling here. If the other potentially valid
+						// moves are not allowed for the King, castling will also not be valid
 						Piece* tmp = (*cb)[j];
 						(*cb)[j] = (*cb)[p];
 						(*cb)[p] = NULL;

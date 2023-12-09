@@ -29,20 +29,20 @@ void GameManager::setCastlingInformation(const char* castling_char) const {
 	while (*castling_char != '\n'){
 		switch(*castling_char){
 			case 'K':
-				static_cast<King*>((*cb)[Position("E1")])->setHasNotMoved();
-				static_cast<Rook*>((*cb)[Position("H1")])->setHasNotMoved();
+				static_cast<King*>((*cb)[Position("E1")])->setHasMoved(false);
+				static_cast<Rook*>((*cb)[Position("H1")])->setHasMoved(false);
 				break;
 			case 'Q':
-				static_cast<King*>((*cb)[Position("E1")])->setHasNotMoved();
-				static_cast<Rook*>((*cb)[Position("A1")])->setHasNotMoved();
+				static_cast<King*>((*cb)[Position("E1")])->setHasMoved(false);
+				static_cast<Rook*>((*cb)[Position("A1")])->setHasMoved(false);
 				break;
 			case 'k':
-				static_cast<King*>((*cb)[Position("E8")])->setHasNotMoved();
-				static_cast<Rook*>((*cb)[Position("H8")])->setHasNotMoved();
+				static_cast<King*>((*cb)[Position("E8")])->setHasMoved(false);
+				static_cast<Rook*>((*cb)[Position("H8")])->setHasMoved(false);
 				break;
 			case 'q':
-				static_cast<King*>((*cb)[Position("E8")])->setHasNotMoved();
-				static_cast<Rook*>((*cb)[Position("A8")])->setHasNotMoved();
+				static_cast<King*>((*cb)[Position("E8")])->setHasMoved(false);
+				static_cast<Rook*>((*cb)[Position("A8")])->setHasMoved(false);
 				break;
 			default: // If char is not one of the required ones
 				return;
@@ -65,7 +65,6 @@ bool GameManager::sameColorPieceAtDestination(Color colour, Position destination
 bool GameManager::pieceInThePath(Position starting, const Position& destination, const Move& m){
 	Position next_pos = starting + m;
 	while (next_pos!=destination){
-		cout << next_pos << endl;
 		if ((*cb)[next_pos] != NULL){
 			return true;
 		}
@@ -76,65 +75,111 @@ bool GameManager::pieceInThePath(Position starting, const Position& destination,
 
 bool GameManager::isMoveValid(const Position& p, const Position& final_p){
 	Move m = final_p - p;
-	if ((*cb)[p]){
-		if(!sameColorPieceAtDestination((*cb)[p]->getColour(), final_p)){ // I am no longer checking the turn here
-			Move* valid_move = (*cb)[p]->getValidMoves();
-			for (int i=0; i<(*cb)[p]->getValidMovesSize(); i++){
-				if (m == valid_move[i]
-						&& !pieceInThePath(p, final_p, m.getDirection())
-						&& (*cb)[p]->additionalConditionsMet(cb, p, m)){ 
-					return true;
-				}
+	if(!sameColorPieceAtDestination((*cb)[p]->getColour(), final_p)){ // I am no longer checking the turn or that Piece* is not NULL here
+		Move* valid_move = (*cb)[p]->getValidMoves();
+		for (int i=0; i<(*cb)[p]->getValidMovesSize(); i++){
+			if (m == valid_move[i]
+					&& !pieceInThePath(p, final_p, m.getDirection())
+					&& (*cb)[p]->additionalConditionsMet(cb, p, m)){ 
+				return true;
 			}
 		}
-		return false;
 	}
-	cout << "No pieces were found in that position" << endl;
-    return false;
+	return false;
+}
+
+void GameManager::getRookPosition(const Move& m, const Position& king_pos, Position& rook_pos){
+	King* king_at_origin = dynamic_cast<King*>((*cb)[king_pos]);
+	King* king_at_destination = dynamic_cast<King*>((*cb)[king_pos+m]);
+	
+	// If king is present at the starting position
+	if (king_at_origin){
+		if (m == Move(2, 0) || m == Move(-2, 0)){
+			if (king_at_origin->getColour() == WHITE)
+				rook_pos = m == Move(2,0) ? Position("H1") : Position("A1");
+			else
+				rook_pos = m == Move(2,0) ? Position("H8") : Position("A8");
+		}
+	}
+
+	// If king is present at the destination position
+	if (king_at_destination && king_pos.getRank() == '8'){
+		if (m == Move(2,0) || m==Move(-2,0)){
+			if (king_at_destination->getColour() == WHITE)
+				rook_pos = m == Move(2,0) ? Position("H1") : Position("A1"); 
+			else
+				rook_pos = m == Move(2,0) ? Position("H8") : Position("A8");
+		}
+	}
 }
 
 Piece* GameManager::makeMove(const Position& p, const Position& final_p){
 	Move m = final_p - p;
-	Position initial_rook_pos("XX"); // Position of the rook (only used for casling moves)
-	(*cb)[p]->setHasMoved(); // Specify that the piece will move
+	Position initial_rook_pos("XX"); // Get the position of the rook (used for castling moves)
+	getRookPosition(m, p, initial_rook_pos);
 	
-	// If move is castling, get the initial position of the rook 
-	if (m == Move(2, 0) && dynamic_cast<King*>((*cb)[p])) // King side castling
-		initial_rook_pos = (*cb)[p]->getColour() == WHITE ? Position("H1") : Position("H8");
-	if (m == Move(-2, 0) && dynamic_cast<King*>((*cb)[p])) // Queen side castling
-		initial_rook_pos = (*cb)[p]->getColour() == WHITE ? Position("A1") : Position("A8");
-
-	if (initial_rook_pos != Position("XX")){ // Castling move to be made
-		// Move the King to final_p
+	// If move being attempted is a castling move
+	if (initial_rook_pos != Position("XX")){ 
+		// Move the King to final_p, store its has_moved state and change it to true
 		(*cb)[final_p] = (*cb)[p];
+		previous_has_moved_state1 = (*cb)[final_p]->hasMoved();
+		(*cb)[final_p]->setHasMoved(true);
 		(*cb)[p] = NULL; 
 
-		// Move the rook to its destination and specify it has moved
+		// Move the rook to its destination, store its has_moved state and change it to true 
 		(*cb)[p+m.getDirection()] = (*cb)[initial_rook_pos];
+		previous_has_moved_state2 = (*cb)[p+m.getDirection()]->hasMoved();
+		(*cb)[p+m.getDirection()]->setHasMoved(true);
 		(*cb)[initial_rook_pos] = NULL;
-		(*cb)[p+m.getDirection()]->setHasMoved();
 		return NULL;
 	}
 
-	// If move is not castling
+	// If move is not castling, make the move, store has_moved state and change to true
 	Piece* tmp = (*cb)[final_p];
 	(*cb)[final_p] = (*cb)[p];
+	previous_has_moved_state1 = (*cb)[final_p]->hasMoved();
+	(*cb)[final_p]->setHasMoved(true);
 	(*cb)[p] = NULL;
 	return tmp;
+}
+
+void GameManager::undoLastMove(const Position& p, const Position& final_p, Piece* previous){
+	Move m = final_p - p;
+	Position initial_rook_pos("XX"); // Get the position of the rook (used for castling moves)
+	getRookPosition(m, p, initial_rook_pos);
+	
+	// If last move was a castling move
+	if (initial_rook_pos != Position("XX")){ 
+		// Move king to original position, and restore its has_moved status
+		(*cb)[p] = (*cb)[final_p]; 
+		(*cb)[p]->setHasMoved(previous_has_moved_state1);
+		(*cb)[final_p] = NULL;
+
+		// Repeat process with the rook
+		(*cb)[initial_rook_pos] = (*cb)[p+m.getDirection()]; 
+		(*cb)[initial_rook_pos]->setHasMoved(previous_has_moved_state2);
+		(*cb)[p+m.getDirection()] = NULL; 
+		return;
+	}
+
+	// If last move was not castling
+	(*cb)[p] = (*cb)[final_p];
+	(*cb)[p]->setHasMoved(previous_has_moved_state1);
+	(*cb)[final_p] = previous;
 }
 
 int GameManager::checkCounter(const Position& king_pos, Color king_color){
 	int number_of_checks = 0;
 	for (Position p("A8"); p!=Position("XX"); p.move('1')){
 		if ((*cb)[p] != NULL && (*cb)[p]->getColour()!=king_color){
-			cout << "The position is " << p << endl;
+			//cout << "The position is " << p << endl;
 			Move m = king_pos - p;
-			cout << "The move is " << m << endl;
+			//cout << "The move is " << m << endl;
 			if (isMoveValid(p, king_pos))
 				number_of_checks++;
 		}
 	}
-	cout << "\nThe number of checks on the board is: " << number_of_checks << endl;
+	//cout << "\nThe number of checks on the board is: " << number_of_checks << endl;
 	return number_of_checks;
 }
 
@@ -166,7 +211,7 @@ bool GameManager::isCheckMateOrStaleMate(Color king_color){
 
 						// If after making the move, there are no checks
 						if (checks_after_move == 0){
-							cout << "The position that prevented checkmate is: " << p << endl;
+							//cout << "The position that prevented checkmate is: " << p << endl;
 							return false;
 						}
 					}

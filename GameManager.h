@@ -18,11 +18,15 @@ class GameManager {
             bool pieceInThePath(Position, const Position&, const Move&);
             bool isMoveValid(const Position&, const Position&);
             Piece* makeMove(const Position&, const Position&);
+            void undoLastMove(const Position&, const Position&, Piece*);
             int checkCounter(const Position&, Color);
             bool isCheckMateOrStaleMate(Color);
       private:
+            void getRookPosition(const Move&, const Position&, Position&);
             ChessBoard* cb;
             Color turn; 
+            bool previous_has_moved_state1;
+            bool previous_has_moved_state2;
 };
 
 #endif

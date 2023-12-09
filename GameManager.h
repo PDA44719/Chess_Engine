@@ -19,7 +19,8 @@ class GameManager {
             bool isMoveValid(const Position&, const Position&);
             Piece* makeMove(const Position&, const Position&);
             void undoLastMove(const Position&, const Position&, Piece*);
-            int checkCounter(const Position&, Color);
+            void updateKingPosition(Piece*, Position);
+            int checkCounter(Color);
             bool isCheckMateOrStaleMate(Color);
       private:
             void getRookPosition(const Move&, const Position&, Position&);

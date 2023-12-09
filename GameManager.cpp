@@ -75,13 +75,22 @@ bool GameManager::pieceInThePath(Position starting, const Position& destination,
 
 bool GameManager::isMoveValid(const Position& p, const Position& final_p){
 	Move m = final_p - p;
-	if(!sameColorPieceAtDestination((*cb)[p]->getColour(), final_p)){ // I am no longer checking the turn or that Piece* is not NULL here
+	Color piece_color = (*cb)[p]->getColour();
+	if(!sameColorPieceAtDestination(piece_color, final_p)){ // I am no longer checking the turn or that Piece* is not NULL here
 		Move* valid_move = (*cb)[p]->getValidMoves();
 		for (int i=0; i<(*cb)[p]->getValidMovesSize(); i++){
 			if (m == valid_move[i]
 					&& !pieceInThePath(p, final_p, m.getDirection())
 					&& (*cb)[p]->additionalConditionsMet(cb, p, m)){ 
-				return true;
+				
+				// Make the move, get the number of checks after it and undo it
+				Piece* tmp = makeMove(p, final_p);
+				int n_of_checks_after_move = checkCounter(piece_color);
+				undoLastMove(p, final_p, tmp);
+
+				// If no checks were present after making the move, it is valid
+				if (n_of_checks_after_move == 0)
+					return true;
 			}
 		}
 	}
@@ -103,7 +112,7 @@ void GameManager::getRookPosition(const Move& m, const Position& king_pos, Posit
 	}
 
 	// If king is present at the destination position
-	if (king_at_destination && king_pos.getRank() == '8'){
+	if (king_at_destination){
 		if (m == Move(2,0) || m==Move(-2,0)){
 			if (king_at_destination->getColour() == WHITE)
 				rook_pos = m == Move(2,0) ? Position("H1") : Position("A1"); 
@@ -117,13 +126,20 @@ Piece* GameManager::makeMove(const Position& p, const Position& final_p){
 	Move m = final_p - p;
 	Position initial_rook_pos("XX"); // Get the position of the rook (used for castling moves)
 	getRookPosition(m, p, initial_rook_pos);
+
+	King* king_at_origin = dynamic_cast<King*>((*cb)[p]);
 	
+	// Update the position of the king if it is moved
+	if (king_at_origin)
+		updateKingPosition((*cb)[p], final_p);
+	
+	previous_has_moved_state1 = (*cb)[p]->hasMoved();
+	(*cb)[p]->setHasMoved(true); // Change has_moved to true, to indicate the piece will move
+
 	// If move being attempted is a castling move
 	if (initial_rook_pos != Position("XX")){ 
 		// Move the King to final_p, store its has_moved state and change it to true
 		(*cb)[final_p] = (*cb)[p];
-		previous_has_moved_state1 = (*cb)[final_p]->hasMoved();
-		(*cb)[final_p]->setHasMoved(true);
 		(*cb)[p] = NULL; 
 
 		// Move the rook to its destination, store its has_moved state and change it to true 
@@ -137,8 +153,6 @@ Piece* GameManager::makeMove(const Position& p, const Position& final_p){
 	// If move is not castling, make the move, store has_moved state and change to true
 	Piece* tmp = (*cb)[final_p];
 	(*cb)[final_p] = (*cb)[p];
-	previous_has_moved_state1 = (*cb)[final_p]->hasMoved();
-	(*cb)[final_p]->setHasMoved(true);
 	(*cb)[p] = NULL;
 	return tmp;
 }
@@ -147,12 +161,20 @@ void GameManager::undoLastMove(const Position& p, const Position& final_p, Piece
 	Move m = final_p - p;
 	Position initial_rook_pos("XX"); // Get the position of the rook (used for castling moves)
 	getRookPosition(m, p, initial_rook_pos);
+
+	King* king_at_final_p = dynamic_cast<King*>((*cb)[final_p]);
+
+	// Return the position of the king to the original position
+	if (king_at_final_p)
+		updateKingPosition((*cb)[final_p], p);
+
+	// Return has moved state to previous state
+	(*cb)[final_p]->setHasMoved(previous_has_moved_state1);
 	
 	// If last move was a castling move
 	if (initial_rook_pos != Position("XX")){ 
 		// Move king to original position, and restore its has_moved status
 		(*cb)[p] = (*cb)[final_p]; 
-		(*cb)[p]->setHasMoved(previous_has_moved_state1);
 		(*cb)[final_p] = NULL;
 
 		// Repeat process with the rook
@@ -164,17 +186,22 @@ void GameManager::undoLastMove(const Position& p, const Position& final_p, Piece
 
 	// If last move was not castling
 	(*cb)[p] = (*cb)[final_p];
-	(*cb)[p]->setHasMoved(previous_has_moved_state1);
 	(*cb)[final_p] = previous;
 }
 
-int GameManager::checkCounter(const Position& king_pos, Color king_color){
+void GameManager::updateKingPosition(Piece* king, Position new_position){
+	if (king->getColour() == WHITE)
+		cb->white_king_pos = new_position;
+	else
+		cb->black_king_pos = new_position;
+}
+
+int GameManager::checkCounter(Color king_color){
 	int number_of_checks = 0;
+	Position king_pos = cb->getKingPosition(king_color);
+
 	for (Position p("A8"); p!=Position("XX"); p.move('1')){
 		if ((*cb)[p] != NULL && (*cb)[p]->getColour()!=king_color){
-			//cout << "The position is " << p << endl;
-			Move m = king_pos - p;
-			//cout << "The move is " << m << endl;
 			if (isMoveValid(p, king_pos))
 				number_of_checks++;
 		}
@@ -184,8 +211,7 @@ int GameManager::checkCounter(const Position& king_pos, Color king_color){
 }
 
 bool GameManager::isCheckMateOrStaleMate(Color king_color){
-	Position king_pos = cb->getKingPosition(king_color);
-	int initial_number_of_checks = checkCounter(king_pos, king_color);
+	int initial_number_of_checks = checkCounter(king_color);
 	
 	for (Position p("A8"); p!=("XX"); p.move('1')){
 		if ((*cb)[p] && (*cb)[p]->getColour() == king_color){
@@ -200,10 +226,7 @@ bool GameManager::isCheckMateOrStaleMate(Color king_color){
 						(*cb)[p] = NULL;
 
 						int checks_after_move;
-						if (dynamic_cast<King*>((*cb)[j])) // Piece that moved is a King
-							checks_after_move = checkCounter(j, king_color);
-						else
-							checks_after_move = checkCounter(king_pos, king_color);
+						checks_after_move = checkCounter(king_color);
 
 						// Undo the move
 						(*cb)[p] = (*cb)[j];

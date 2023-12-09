@@ -22,16 +22,12 @@ Move* King::getValidMoves() {
 	return &valid_moves[0];
 }
 
-char King::returnType(){
+const char* King::returnType(){
 	//cout << colour << " king at poisition " << position << endl; 
 	if (colour == WHITE)
-		return 'K';
+		return "White's King";
 	else
-		return 'k';
-}
-
-bool King::hasMoved(){
-	return has_moved;
+		return "Black's King";
 }
 
 bool King::additionalConditionsMet(ChessBoard* cb, Position p, Move m){
@@ -73,10 +69,6 @@ bool King::additionalConditionsMet(ChessBoard* cb, Position p, Move m){
 		}
 	}
 	return true;
-}
-
-void King::setHasNotMoved(){
-	has_moved = false;
 }
 
 //ostream& operator<<(ostream& o, Knight k){

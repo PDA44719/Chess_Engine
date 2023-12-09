@@ -9,7 +9,7 @@ class Pawn : public Piece {
 	public:
 		Pawn(char type);
 		void getType() override;
-		char returnType() override;
+		const char* returnType() override;
 		int getValidMovesSize() override;
 		Move* getValidMoves() override;
 		bool additionalConditionsMet(ChessBoard*, Position, Move) override;

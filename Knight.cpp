@@ -21,11 +21,11 @@ Move* Knight::getValidMoves(){
 	return &valid_moves[0];
 }
 
-char Knight::returnType(){
+const char* Knight::returnType(){
 	if (colour == WHITE)
-		return 'N';
+		return "White's Knight";
 	else
-		return 'n';
+		return "Black's Knight";
 }
 //ostream& operator<<(ostream& o, King k){
 	//o << "King at position " << position << endl;

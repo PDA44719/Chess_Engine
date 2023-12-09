@@ -21,11 +21,11 @@ Move* Bishop::getValidMoves() {
 	return &valid_moves[0];
 }
 
-char Bishop::returnType() {
+const char* Bishop::returnType() {
 	if (colour == WHITE)
-		return 'B';
+		return "White's Bishop";
 	else
-		return 'b';
+		return "Black's Bishop";
 }
 
 //ostream& operator<<(ostream& o, Bishop k){

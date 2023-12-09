@@ -25,9 +25,9 @@ Move* Queen::getValidMoves() {
 	//o << "Queen at position " << position << endl;
 //}
 
-char Queen::returnType() {
+const char* Queen::returnType() {
 	if (colour == WHITE)
-		return 'Q';
+		return "White's Queen";
 	else
-		return 'q';
+		return "Black's Queen";
 }

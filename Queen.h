@@ -7,7 +7,7 @@ class Queen : public Piece {
 	public:
 		Queen(char type);
 		void getType() override;
-		char returnType() override;
+		const char* returnType() override;
 		int getValidMovesSize() override;
 		Move* getValidMoves() override;
 	private:

@@ -27,11 +27,11 @@ Move* Pawn::getValidMoves() {
 	return &valid_moves[0];
 }
 
-char Pawn::returnType(){
+const char* Pawn::returnType(){
 	if (colour == WHITE)
-		return 'P';
+		return "White's Pawn";
 	else
-		return 'p';
+		return "Black's Pawn";
 }
 
 bool Pawn::additionalConditionsMet(ChessBoard* cb, Position p, Move m){

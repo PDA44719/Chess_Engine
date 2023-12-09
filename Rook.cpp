@@ -21,19 +21,11 @@ Move* Rook::getValidMoves() {
 	return &valid_moves[0];
 }
 
-char Rook::returnType(){
+const char* Rook::returnType(){
 	if (colour == WHITE)
-		return 'R';
+		return "White's Rook";
 	else
-		return 'r';
-}
-
-bool Rook::hasMoved(){
-	return has_moved;
-}
-
-void Rook::setHasNotMoved(){
-	has_moved = false;
+		return "Black's Rook";
 }
 
 //ostream& operator<<(ostream& o, Rook k){

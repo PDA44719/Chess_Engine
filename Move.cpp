@@ -28,7 +28,7 @@ void Move::operator*(const int& multiplier){
 
 // This move will return the increment of an overall move (i.e., for a move)
 Move Move::getDirection(){
-    if (file_move == rank_move) // diagonal move
+    if (getAbsolute(file_move) == getAbsolute(rank_move)) // diagonal move
         return Move(file_move/getAbsolute(file_move), rank_move/getAbsolute(rank_move));
     if (rank_move == 0 && file_move != 0) // horizontal move
         return Move(file_move/getAbsolute(file_move), 0);

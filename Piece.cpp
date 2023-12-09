@@ -47,10 +47,6 @@ bool Piece::hasMoved(){
     return has_moved;
 }
 
-void Piece::setHasNotMoved(){
-    has_moved = false;
-}
-
-void Piece::setHasMoved(){
-    has_moved = true;
+void Piece::setHasMoved(bool value){
+    has_moved = value;
 }

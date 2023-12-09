@@ -27,8 +27,7 @@ class Piece {
 			void setColour();
 			Color getColour();
 			bool hasMoved();
-			void setHasNotMoved();
-			void setHasMoved();
+			void setHasMoved(bool);
 
         protected:
 			Color colour;

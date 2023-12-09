@@ -114,11 +114,15 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 
 
 	Piece* piece_taken = gm.makeMove(p, final_p);
-	gm.updateTurn();
 	cout << (*this)[final_p]->returnType() << " moves from " << p << " to " << final_p;
 	if (piece_taken)
 		cout << " taking " << piece_taken->returnType();
 	cout << endl;
+	gm.updateTurn();
+	bool end_of_game = gm.isCheckMateOrStaleMate(gm.getTurn());
+	if (!end_of_game && gm.checkCounter(gm.getTurn()) != 0){
+		cout << gm.getTurn() << " is in check" << endl;
+	}
 }
 
 Position ChessBoard::getKingPosition(Color king_color) {

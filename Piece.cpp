@@ -2,17 +2,11 @@
 #include "Piece.h"
 using namespace std;
 
-Piece::Piece(char piece_type): type(piece_type) {
-    this->setColour();
+Piece::Piece(char piece_type){
+    this->setColour(piece_type);
 }
 
-//Position Piece::getPosition(){
-//	return position;
-//}
-
-//void Piece::updatePosition(Position new_position) {
-//	position = new_position;
-//}
+Piece::~Piece(){}
 
 // Define the behaviour of ostream << when dealing with the Color enum
 ostream& operator<<(ostream &o, Color color){
@@ -27,8 +21,7 @@ ostream& operator<<(ostream &o, Color color){
     return o;
 }
 
-
-void Piece::setColour(){
+void Piece::setColour(char type){
     if (type >= 'A' && type <= 'Z') // type is uppercase
         colour = WHITE;
     else

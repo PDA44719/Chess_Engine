@@ -14,7 +14,19 @@ using namespace std;
 
 ChessBoard::ChessBoard(): gm(GameManager(this)){}
 
+ChessBoard::~ChessBoard(){
+	// Loop through all squares on the board
+	for (Position p("A8"); p!=Position("XX"); p.move('1')){
+		// If there is a piece at that square, set to null and delete the piece
+		Piece* piece_at_position = (*this)[p];
+		(*this)[p] = NULL;
+		if (piece_at_position)
+			delete piece_at_position;
+	}
+}
+
 void ChessBoard::loadState(const char* FEN_string){
+	this->~ChessBoard();
 	Position pos("A8");
 	while (*FEN_string != ' '){
 		if (*FEN_string >= 'A' && *FEN_string <= 'z'){
@@ -39,8 +51,8 @@ void ChessBoard::displayPieces(){
 	for (Position p("A8"); p!=Position("XX"); p.move('1')){
 		if (p.getFile() == 'A')
 			cout << p.getRank() << " ";
-		if (board[p.getRank() - '1'][p.getFile() - 'A'] != NULL){
-			board[p.getRank() - '1'][p.getFile() - 'A']->getType();
+		if ((*this)[p] != NULL){
+			(*this)[p]->getType();
 			cout << " ";
 		} else{
 			cout << "- ";
@@ -115,8 +127,10 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 
 	Piece* piece_taken = gm.makeMove(p, final_p);
 	cout << (*this)[final_p]->returnType() << " moves from " << p << " to " << final_p;
-	if (piece_taken)
+	if (piece_taken){
 		cout << " taking " << piece_taken->returnType();
+		delete piece_taken;
+	}
 	cout << endl;
 	gm.updateTurn();
 	bool end_of_game = gm.isCheckMateOrStaleMate(gm.getTurn());

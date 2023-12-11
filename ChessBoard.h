@@ -12,6 +12,7 @@ class ChessBoard {
 
         public:
 		 	ChessBoard();
+			~ChessBoard();
 			void loadState(const char*);
 			void submitMove(const char[2], const char[2]);
 			void displayPieces();

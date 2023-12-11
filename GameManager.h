@@ -18,6 +18,7 @@ class GameManager {
             //bool checkValidPawnMove(Color, Position);
             bool pieceInThePath(Position, const Position&, const Move&);
             bool isMoveValid(const Position&, const Position&, bool);
+            void castle(const Position&, const Position&, const Position&, const Position&, bool);
             Piece* makeMove(const Position&, const Position&);
             void undoLastMove(const Position&, const Position&, Piece*);
             void updateKingPosition(Piece*, Position);

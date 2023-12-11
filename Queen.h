@@ -8,11 +8,11 @@ class Queen : public Piece {
 		Queen(char type);
 		void getType() override;
 		const char* returnType() override;
-		int getValidMovesSize() override;
-		Move* getValidMoves() override;
+		int getPotentialMovesSize() override;
+		Move* getPotentialMoves() override;
 	private:
-		int valid_moves_size = 3;
-		Move valid_moves[3] = {Move(0,100), Move(100,0), Move(100,100)};
+		int potential_moves_size = 3;
+		Move potential_moves[3] = {Move(0,100), Move(100,0), Move(100,100)};
 };
 
 #endif

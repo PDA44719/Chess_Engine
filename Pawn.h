@@ -10,13 +10,13 @@ class Pawn : public Piece {
 		Pawn(char type);
 		void getType() override;
 		const char* returnType() override;
-		int getValidMovesSize() override;
-		Move* getValidMoves() override;
+		int getPotentialMovesSize() override;
+		Move* getPotentialMoves() override;
 		bool additionalConditionsMet(ChessBoard*, Position, Move) override;
 
 	private:
-	 	int valid_moves_size = 4;
-		Move valid_moves[4] = {Move(0, 1), Move(0, 2), Move(1, 1), Move(-1, 1)};
+	 	int potential_moves_size = 4;
+		Move potential_moves[4] = {Move(0, 1), Move(0, 2), Move(1, 1), Move(-1, 1)};
 };
 
 #endif

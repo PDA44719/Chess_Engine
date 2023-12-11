@@ -8,11 +8,11 @@ class Knight : public Piece {
 		Knight(char type);
 		void getType() override;
 		const char* returnType() override;
-		int getValidMovesSize();
-		Move* getValidMoves();
+		int getPotentialMovesSize();
+		Move* getPotentialMoves();
 	private:
-	 	int valid_moves_size = 8;
-		Move valid_moves[8] = {Move(1,2), Move(1,-2), Move(-1,2), Move(-1, -2), Move(2,1), Move(2,-1), Move(-2,1), Move(-2, -1)};
+	 	int potential_moves_size = 8;
+		Move potential_moves[8] = {Move(1,2), Move(1,-2), Move(-1,2), Move(-1, -2), Move(2,1), Move(2,-1), Move(-2,1), Move(-2, -1)};
 };
 
 #endif

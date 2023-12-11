@@ -13,12 +13,12 @@ void Rook::getType(){
 		cout << "♜";
 }
 
-int Rook::getValidMovesSize() {
-	return valid_moves_size;
+int Rook::getPotentialMovesSize() {
+	return potential_moves_size;
 }
 
-Move* Rook::getValidMoves() {
-	return &valid_moves[0];
+Move* Rook::getPotentialMoves() {
+	return &potential_moves[0];
 }
 
 const char* Rook::returnType(){

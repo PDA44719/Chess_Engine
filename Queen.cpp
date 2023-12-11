@@ -13,12 +13,12 @@ void Queen::getType(){
 		cout << "♛";
 }
 
-int Queen::getValidMovesSize() {
-	return valid_moves_size;
+int Queen::getPotentialMovesSize() {
+	return potential_moves_size;
 }
 
-Move* Queen::getValidMoves() {
-	return &valid_moves[0];
+Move* Queen::getPotentialMoves() {
+	return &potential_moves[0];
 }
 
 //ostream& operator<<(ostream& o, Queen k){

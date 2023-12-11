@@ -13,12 +13,12 @@ void Bishop::getType(){
 		cout << "♝";
 }
 
-int Bishop::getValidMovesSize() {
-	return valid_moves_size;
+int Bishop::getPotentialMovesSize() {
+	return potential_moves_size;
 }
 
-Move* Bishop::getValidMoves() {
-	return &valid_moves[0];
+Move* Bishop::getPotentialMoves() {
+	return &potential_moves[0];
 }
 
 const char* Bishop::returnType() {

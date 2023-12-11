@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include "King.h"
 #include "Rook.h"
@@ -7,19 +6,18 @@ using namespace std;
 King::King(char type) : Piece(type){}
 
 void King::getType(){
-	//cout << colour << " king at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♔";
 	else
 		cout << "♚";
 }
 
-int King::getValidMovesSize() {
-	return valid_moves_size;
+int King::getPotentialMovesSize() {
+	return potential_moves_size;
 }
 
-Move* King::getValidMoves() {
-	return &valid_moves[0];
+Move* King::getPotentialMoves() {
+	return &potential_moves[0];
 }
 
 const char* King::returnType(){

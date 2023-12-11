@@ -8,11 +8,11 @@ class Bishop : public Piece {
 		Bishop(char type);
 		void getType() override;
 		const char* returnType() override;
-		int getValidMovesSize() override;
-		Move* getValidMoves() override;
+		int getPotentialMovesSize() override;
+		Move* getPotentialMoves() override;
 	private:
-	 	int valid_moves_size = 1;
-		Move valid_moves[1] = {Move(100,100)};
+	 	int potential_moves_size = 1;
+		Move potential_moves[1] = {Move(100,100)};
 };
 
 #endif

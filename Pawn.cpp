@@ -6,8 +6,8 @@ class ChessBoard;
 
 Pawn::Pawn(char type) : Piece(type){
 	if (colour == BLACK){
-		for (int i=0; i<valid_moves_size; i++)
-			valid_moves[i]*(-1);
+		for (int i=0; i<potential_moves_size; i++)
+			potential_moves[i]*(-1);
 	}
 }
 
@@ -19,12 +19,12 @@ void Pawn::getType(){
 		cout << "♟︎";
 }
 
-int Pawn::getValidMovesSize() {
-	return valid_moves_size;
+int Pawn::getPotentialMovesSize() {
+	return potential_moves_size;
 }
 
-Move* Pawn::getValidMoves() {
-	return &valid_moves[0];
+Move* Pawn::getPotentialMoves() {
+	return &potential_moves[0];
 }
 
 const char* Pawn::returnType(){

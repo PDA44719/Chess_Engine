@@ -107,7 +107,7 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 		return;
 	}
 
-	if (!gm.isMoveValid(p, final_p)){
+	if (!gm.isMoveValid(p, final_p, true)){
 		cout << (*this)[p]->returnType() << " cannot move to " << final_p << "!\n";
 		return;
 	}

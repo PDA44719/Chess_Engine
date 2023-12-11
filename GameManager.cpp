@@ -78,7 +78,7 @@ bool GameManager::pieceInThePath(Position starting, const Position& destination,
 	return false;
 }
 
-bool GameManager::isMoveValid(const Position& p, const Position& final_p){
+bool GameManager::isMoveValid(const Position& p, const Position& final_p, bool after_check){
 	Move m = final_p - p;
 	Color piece_color = (*cb)[p]->getColour();
 	if(!sameColorPieceAtDestination(piece_color, final_p)){ // I am no longer checking the turn or that Piece* is not NULL here
@@ -88,13 +88,16 @@ bool GameManager::isMoveValid(const Position& p, const Position& final_p){
 					&& !pieceInThePath(p, final_p, m.getDirection())
 					&& (*cb)[p]->additionalConditionsMet(cb, p, m)){ 
 				
-				// Make the move, get the number of checks after it and undo it
-				Piece* tmp = makeMove(p, final_p);
-				int n_of_checks_after_move = checkCounter(piece_color);
-				undoLastMove(p, final_p, tmp);
+				if (after_check){
+					// Make the move, get the number of checks after it and undo it
+					Piece* tmp = makeMove(p, final_p);
+					int n_of_checks_after_move = checkCounter(piece_color);
+					undoLastMove(p, final_p, tmp);
 
-				// If no checks were present after making the move, it is valid
-				if (n_of_checks_after_move == 0)
+					// If no checks were present after making the move, it is valid
+					if (n_of_checks_after_move == 0)
+						return true;
+				} else
 					return true;
 			}
 		}
@@ -207,7 +210,7 @@ int GameManager::checkCounter(Color king_color){
 
 	for (Position p("A8"); p!=Position("XX"); p.move('1')){
 		if ((*cb)[p] != NULL && (*cb)[p]->getColour()!=king_color){
-			if (isMoveValid(p, king_pos)){
+			if (isMoveValid(p, king_pos, false)){ // No need to check if the opposing player's piece will lead to check, if they can eat the king
 				number_of_checks++;
 			}
 		}
@@ -224,7 +227,7 @@ bool GameManager::isCheckMateOrStaleMate(Color king_color){
 			for (Position j("A8"); j!=("XX"); j.move('1')){
 				if (j != p){
 					//Color p_color = (*cb)[p]->getColour();
-					if (isMoveValid(p, j)){ 
+					if (isMoveValid(p, j, true)){  // Must check if move does not lead to check
 						return false;
 						//// Make the move. No need to worry about castling here. If the other potentially valid
 						//// moves are not allowed for the King, castling will also not be valid

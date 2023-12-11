@@ -63,7 +63,7 @@ bool King::additionalConditionsMet(ChessBoard* cb, Position p, Move m){
 			// Go through all the squares on the board
 			for (Position j("A8"); j!=("XX"); j.move('1')){
 				// If there is a piece of the opposite color that can move to a position the king will pass through
-				if ((*cb)[j] && (*cb)[j]->getColour() != (*cb)[p]->getColour() && cb->gm.isMoveValid(j, i))
+				if ((*cb)[j] && (*cb)[j]->getColour() != (*cb)[p]->getColour() && cb->gm.isMoveValid(j, i, false))
 					return false;
 			}
 		}

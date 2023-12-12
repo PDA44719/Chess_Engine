@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include "Bishop.h"
 using namespace std;
@@ -6,7 +5,6 @@ using namespace std;
 Bishop::Bishop(char type) : Piece(type){}
 
 void Bishop::getSymbol(){
-	//cout << colour << " bishop at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♗";
 	else
@@ -27,7 +25,3 @@ const char* Bishop::getType() {
 	else
 		return "Black's Bishop";
 }
-
-//ostream& operator<<(ostream& o, Bishop k){
-	//o << "Bishop at position " << position << endl;
-//}

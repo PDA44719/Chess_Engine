@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include "Queen.h"
 using namespace std;
@@ -6,7 +5,6 @@ using namespace std;
 Queen::Queen(char type) : Piece(type){}
 
 void Queen::getSymbol(){
-	//cout << colour << " queen at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♕";
 	else
@@ -20,10 +18,6 @@ int Queen::getPotentialMovesSize() {
 Move* Queen::getPotentialMoves() {
 	return &potential_moves[0];
 }
-
-//ostream& operator<<(ostream& o, Queen k){
-	//o << "Queen at position " << position << endl;
-//}
 
 const char* Queen::getType() {
 	if (colour == WHITE)

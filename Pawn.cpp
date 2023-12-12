@@ -5,6 +5,8 @@ using namespace std;
 class ChessBoard;
 
 Pawn::Pawn(char type) : Piece(type){
+	// Multiply the potential moves by -1 if the pawn is black, as they 
+	// move from higher ranks to lower ranks (i.e., negative moves)
 	if (colour == BLACK){
 		for (int i=0; i<potential_moves_size; i++)
 			potential_moves[i]*(-1);
@@ -12,7 +14,6 @@ Pawn::Pawn(char type) : Piece(type){
 }
 
 void Pawn::getSymbol(){
-	//cout << colour << " pawn at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♙";
 	else
@@ -41,18 +42,14 @@ bool Pawn::additionalConditionsMet(ChessBoard* cb, Position p, Move m){
 	if (m == Move(1, 1) || m == Move(-1, 1) || m == Move(1, -1) || m == Move(-1, -1)) 
 		return (*cb)[final_p] && (*cb)[final_p]->getColour() != (*cb)[p]->getColour();
 
-	// If move is double, pawn must be at starting position and no pieces at final_p
+	// If move is double vertical, pawn must be at starting position and no pieces at final_p
 	if (m == Move(0, 2) || m == Move(0, -2))
 		return (p.getRank() == '2' && final_p.getRank() == '4' && !(*cb)[final_p])
 				|| (p.getRank() == '7' && final_p.getRank() == '5' && !(*cb)[final_p]);
 
-	// If move is single, no pieces can be at final position
+	// If move is single vertical, no pieces can be at final position
 	if (m == Move(0, 1) || m == Move(0, -1))
 		return !(*cb)[final_p];
 
-	return false; // This return statement is only here to prevent a warning, but it should never be reached
+	return false; // This return statement prevents a warning, but it should never be reached
 }
-
-//ostream& operator<<(ostream& o, Pawn k){
-	//o << "Pawn at position " << position << endl;
-//}

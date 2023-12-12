@@ -5,6 +5,7 @@
 class Move {
 
         public:
+
 			/**
 			 * @brief Construct a new Move object
 			 * 

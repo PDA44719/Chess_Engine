@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include "Rook.h"
 using namespace std;
@@ -6,7 +5,6 @@ using namespace std;
 Rook::Rook(char type) : Piece(type){}
 
 void Rook::getSymbol(){
-	//cout << colour << " rook at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♖";
 	else
@@ -27,7 +25,3 @@ const char* Rook::getType(){
 	else
 		return "Black's Rook";
 }
-
-//ostream& operator<<(ostream& o, Rook k){
-	//o << "Rook at position " << position << endl;
-//}

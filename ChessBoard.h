@@ -1,5 +1,3 @@
-/* trafficLights.h - header file for the class trafficLights */
-
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 

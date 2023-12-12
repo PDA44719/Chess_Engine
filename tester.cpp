@@ -51,14 +51,32 @@ int main() {
 	cout << "========================\n\n";
 
 	ChessBoard cb;
-	cb.loadState("Q3r2k/8/8/8/8/8/8/5K2 w -");
-	cb.displayPieces();
-	//cout << '\n';
-
-	cb.submitMove("F1", "E1");
-	cout << '\n';
+	cb.loadState("r3k2r/8/8/8/8/8/8/R3K2R w KQkq");
 	cb.displayPieces();
 
+	//cb.displayPieces();
+	//Piece* tmp = cb.gm.makeMove(Position("A1"), Position("C1"));
+	//cb.displayPieces();
+	//cb.gm.makeMove(Position("C1"), Position("A1"));
+	//cb.displayPieces();
+	//cout << "Move is " << cb.gm.isMoveValid(Position("E1"), Position("C1"), false) << std::endl;
+	////cb.gm.undoLastMove(Position("E1"), Position("C1"), tmp);
+	////cb.displayPieces();
+	////tmp = cb.gm.makeMove(Position("E1"), Position("C1"));
+	////cb.displayPieces();
+
+	//tmp = cb.gm.makeMove(Position("E8"), Position("G8"));
+	//cb.displayPieces();
+	//cb.gm.undoLastMove(Position("E8"), Position("G8"), tmp);
+	//cb.displayPieces();
+	//tmp = cb.gm.makeMove(Position("E8"), Position("C8"));
+	//cb.displayPieces();
+//	//cout << '\n';
+//
+//	cb.submitMove("F1", "E1");
+//	cout << '\n';
+//	cb.displayPieces();
+//
 	//cb.submitMove("D4", "H6");
 	//cout << '\n';
 
@@ -68,62 +86,64 @@ int main() {
 	//cb.submitMove("F8", "B4");
 	//cout << '\n';
 
-	//cout << "=========================\n";
-	//cout << "Alekhine vs. Vasic (1931)\n";
-	//cout << "=========================\n\n";
-
-	//cb.loadState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq");
-	//cout << '\n';
-
-	//cb.submitMove("E2", "E4");
-	//cb.submitMove("E7", "E6");
-	//cout << '\n';
-
-	////cb.displayPieces();
-	////cout << '\n';
-
-	//cb.submitMove("D2", "D4");
-	//cb.submitMove("D7", "D5");
-	//cout << '\n';
-
-	//cb.submitMove("B1", "C3");
-	//cb.submitMove("F8", "B4");
-	//cout << '\n';
-
-	////cb.displayPieces();
-	////cout << '\n';
-
-	//cb.submitMove("F1", "D3");
-	//cb.submitMove("B4", "C3");
-	//cout << '\n';
-
-	//cb.submitMove("B2", "C3");
-	//cb.submitMove("H7", "H6");
-	//cout << '\n';
-
-	//cb.submitMove("C1", "A3");
-	//cb.submitMove("B8", "D7");
-	//cout << '\n';
-
-	//cb.submitMove("D1", "E2");
-	//cb.submitMove("D5", "E4");
-	//cout << '\n';
-
-	//cb.submitMove("D3", "E4");
-	//cb.submitMove("G8", "F6");
-	//cout << '\n';
-
-	//cb.submitMove("E4", "D3");
-	//cb.submitMove("B7", "B6");
-	//cout << '\n';
-
-	//cb.submitMove("E2", "E6");
-	//cb.submitMove("F7", "E6");
-	//cout << '\n';
-
-	//cb.submitMove("D3", "G6");
-	//cout << '\n';
-
+//	cout << "=========================\n";
+//	cout << "Alekhine vs. Vasic (1931)\n";
+//	cout << "=========================\n\n";
+//
+//	cb.loadState("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq");
+//	cout << '\n';
+//
+//	cb.submitMove("E2", "E4");
+//	cb.submitMove("E7", "E6");
+//	cout << '\n';
+//
+//	//cb.displayPieces();
+//	//cout << '\n';
+//
+//	cb.submitMove("D2", "D4");
+//	cb.submitMove("D7", "D5");
+//	cout << '\n';
+//
+//	cb.submitMove("B1", "C3");
+//	cb.submitMove("F8", "B4");
+//	cout << '\n';
+//
+//	//cb.displayPieces();
+//	//cout << '\n';
+//
+//	cb.submitMove("F1", "D3");
+//	cb.submitMove("B4", "C3");
+//	cout << '\n';
+//
+//	cb.submitMove("B2", "C3");
+//	cb.submitMove("H7", "H6");
+//	cout << '\n';
+//
+//	cb.submitMove("C1", "A3");
+//	cb.submitMove("B8", "D7");
+//	cout << '\n';
+//
+//	cb.submitMove("D1", "E2");
+//	cb.submitMove("D5", "E4");
+//	cout << '\n';
+//
+//	cb.submitMove("D3", "E4");
+//	cb.submitMove("G8", "F6");
+//	cout << '\n';
+//
+//	cb.submitMove("E4", "D3");
+//	cb.submitMove("B7", "B6");
+//	cout << '\n';
+//
+//	cb.submitMove("E2", "E6");
+//	cb.submitMove("F7", "E6");
+//	cout << '\n';
+//
+//	cb.submitMove("D3", "G6");
+//	cout << '\n';
+//
+//	cb.displayPieces();
+//
 	return 0;
 
 

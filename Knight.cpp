@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include "Knight.h"
 using namespace std;
@@ -6,7 +5,6 @@ using namespace std;
 Knight::Knight(char type) : Piece(type){}
 
 void Knight::getSymbol(){
-	//cout << colour << " knight at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♘";
 	else
@@ -27,6 +25,3 @@ const char* Knight::getType(){
 	else
 		return "Black's Knight";
 }
-//ostream& operator<<(ostream& o, King k){
-	//o << "King at position " << position << endl;
-//}

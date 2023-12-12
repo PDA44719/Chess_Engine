@@ -20,10 +20,10 @@ ostream& operator<<(ostream &o, Color color){
     return o;
 }
 
-void Piece::setColour(char type){
-    if (type >= 'A' && type <= 'Z') // type is uppercase
+void Piece::setColour(char piece_type){
+    if (piece_type >= 'A' && piece_type <= 'Z') // piece_type is uppercase
         colour = WHITE;
-    else
+    else // piece_type is lowercase
         colour = BLACK;
 }
 
@@ -32,7 +32,7 @@ Color Piece::getColour(){
 }
 
 bool Piece::additionalConditionsMet(ChessBoard*, Position, Move){
-    return true;
+    return true; // Default behaviour of the virtual method
 }
 
 bool Piece::hasMoved(){

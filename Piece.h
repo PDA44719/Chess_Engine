@@ -24,6 +24,7 @@ std::ostream& operator << (std::ostream&, Color);
 class Piece {
 
         public:
+		  
 		 	/**
 		 	 * @brief Construct a new Piece object
 		 	 * 
@@ -38,9 +39,9 @@ class Piece {
 			virtual ~Piece();
 			
 			/**
-			 * @brief Virtual method to get the symbol of each piece. This is used for
-			 * ChessBoard's displayBoard method, which returns a visual representation
-			 * of the board
+			 * @brief Virtual method to get the unicode symbol of each piece. This is
+			 * used for ChessBoard's displayBoard method, which returns a visual
+			 * representation of the board
 			 */
 			virtual void getSymbol() = 0;
 			
@@ -49,8 +50,8 @@ class Piece {
 			 * used in the ChessBoard's submitMove, as a way to display information about
 			 * which pieces are moving
 			 * 
-			 * @return const char*: a const char pointer containing a representation the
-			 * information about the piece of the type
+			 * @return const char*: a const char pointer containing the information about
+			 * the type of piece
 			 */
 			virtual const char* getType() = 0;
 
@@ -78,12 +79,16 @@ class Piece {
 			 * @brief Virtual method to check if there are any additional conditions that
 			 * must be met in order for a potential move to be considered valid
 			 * 
+			 * @param cb: The ChessBoard object where the game is being played
+			 * @param p: The initial Position of the Piece
+			 * @param m: The Move to be completed by the piece
+			 * 
 			 * @return true: if the additional conditions are met. This is the default
 			 * return value 
 			 * @return false: if the additional conditions necessary for a potential move
 			 * to be valid are not met
 			 */
-			virtual bool additionalConditionsMet(ChessBoard*, Position, Move);
+			virtual bool additionalConditionsMet(ChessBoard* cb, Position p, Move m);
 			
 			/**
 			 * @brief Set the Color value of the piece's colour attribute, which can be

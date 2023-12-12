@@ -5,7 +5,7 @@ using namespace std;
 
 Queen::Queen(char type) : Piece(type){}
 
-void Queen::getType(){
+void Queen::getSymbol(){
 	//cout << colour << " queen at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♕";
@@ -25,7 +25,7 @@ Move* Queen::getPotentialMoves() {
 	//o << "Queen at position " << position << endl;
 //}
 
-const char* Queen::returnType() {
+const char* Queen::getType() {
 	if (colour == WHITE)
 		return "White's Queen";
 	else

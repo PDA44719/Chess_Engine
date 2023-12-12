@@ -52,7 +52,7 @@ void ChessBoard::displayPieces(){
 		if (p.getFile() == 'A')
 			cout << p.getRank() << " ";
 		if ((*this)[p] != NULL){
-			(*this)[p]->getType();
+			(*this)[p]->getSymbol();
 			cout << " ";
 		} else{
 			cout << "- ";
@@ -120,15 +120,15 @@ void ChessBoard::submitMove(const char initial_position[2], const char final_pos
 	}
 
 	if (!gm.isMoveValid(p, final_p, true)){
-		cout << (*this)[p]->returnType() << " cannot move to " << final_p << "!\n";
+		cout << (*this)[p]->getType() << " cannot move to " << final_p << "!\n";
 		return;
 	}
 
 
 	Piece* piece_taken = gm.makeMove(p, final_p);
-	cout << (*this)[final_p]->returnType() << " moves from " << p << " to " << final_p;
+	cout << (*this)[final_p]->getType() << " moves from " << p << " to " << final_p;
 	if (piece_taken){
-		cout << " taking " << piece_taken->returnType();
+		cout << " taking " << piece_taken->getType();
 		delete piece_taken;
 	}
 	cout << endl;

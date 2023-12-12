@@ -5,7 +5,7 @@ using namespace std;
 
 Rook::Rook(char type) : Piece(type){}
 
-void Rook::getType(){
+void Rook::getSymbol(){
 	//cout << colour << " rook at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♖";
@@ -21,7 +21,7 @@ Move* Rook::getPotentialMoves() {
 	return &potential_moves[0];
 }
 
-const char* Rook::returnType(){
+const char* Rook::getType(){
 	if (colour == WHITE)
 		return "White's Rook";
 	else

@@ -8,8 +8,8 @@
 class Pawn : public Piece {
 	public:
 		Pawn(char type);
-		void getType() override;
-		const char* returnType() override;
+		void getSymbol() override;
+		const char* getType() override;
 		int getPotentialMovesSize() override;
 		Move* getPotentialMoves() override;
 		bool additionalConditionsMet(ChessBoard*, Position, Move) override;

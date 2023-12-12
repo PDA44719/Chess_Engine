@@ -5,7 +5,7 @@ using namespace std;
 
 King::King(char type) : Piece(type){}
 
-void King::getType(){
+void King::getSymbol(){
 	if (colour == WHITE)
 		cout << "♔";
 	else
@@ -20,7 +20,7 @@ Move* King::getPotentialMoves() {
 	return &potential_moves[0];
 }
 
-const char* King::returnType(){
+const char* King::getType(){
 	//cout << colour << " king at poisition " << position << endl; 
 	if (colour == WHITE)
 		return "White's King";

@@ -6,8 +6,8 @@
 class King : public Piece {
 	public:
 		King(char type);
-		void getType() override;
-		const char* returnType() override;
+		void getSymbol() override;
+		const char* getType() override;
 		int getPotentialMovesSize() override;
 		Move* getPotentialMoves() override;
 		bool additionalConditionsMet(ChessBoard*, Position, Move);

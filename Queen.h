@@ -6,8 +6,8 @@
 class Queen : public Piece {
 	public:
 		Queen(char type);
-		void getType() override;
-		const char* returnType() override;
+		void getSymbol() override;
+		const char* getType() override;
 		int getPotentialMovesSize() override;
 		Move* getPotentialMoves() override;
 	private:

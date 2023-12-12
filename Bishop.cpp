@@ -5,7 +5,7 @@ using namespace std;
 
 Bishop::Bishop(char type) : Piece(type){}
 
-void Bishop::getType(){
+void Bishop::getSymbol(){
 	//cout << colour << " bishop at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♗";
@@ -21,7 +21,7 @@ Move* Bishop::getPotentialMoves() {
 	return &potential_moves[0];
 }
 
-const char* Bishop::returnType() {
+const char* Bishop::getType() {
 	if (colour == WHITE)
 		return "White's Bishop";
 	else

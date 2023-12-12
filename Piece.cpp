@@ -8,7 +8,6 @@ Piece::Piece(char piece_type){
 
 Piece::~Piece(){}
 
-// Define the behaviour of ostream << when dealing with the Color enum
 ostream& operator<<(ostream &o, Color color){
     switch(color){
         case WHITE:

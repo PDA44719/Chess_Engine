@@ -11,7 +11,7 @@ Pawn::Pawn(char type) : Piece(type){
 	}
 }
 
-void Pawn::getType(){
+void Pawn::getSymbol(){
 	//cout << colour << " pawn at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♙";
@@ -27,7 +27,7 @@ Move* Pawn::getPotentialMoves() {
 	return &potential_moves[0];
 }
 
-const char* Pawn::returnType(){
+const char* Pawn::getType(){
 	if (colour == WHITE)
 		return "White's Pawn";
 	else

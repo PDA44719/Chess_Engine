@@ -6,8 +6,8 @@
 class Rook : public Piece {
 	public:
 		Rook(char type);
-		void getType() override;
-		const char* returnType() override;
+		void getSymbol() override;
+		const char* getType() override;
 		int getPotentialMovesSize() override;
 		Move* getPotentialMoves() override;
 		friend class GameManager;

@@ -5,7 +5,7 @@ using namespace std;
 
 Knight::Knight(char type) : Piece(type){}
 
-void Knight::getType(){
+void Knight::getSymbol(){
 	//cout << colour << " knight at poisition " << position << endl; 
 	if (colour == WHITE)
 		cout << "♘";
@@ -21,7 +21,7 @@ Move* Knight::getPotentialMoves(){
 	return &potential_moves[0];
 }
 
-const char* Knight::returnType(){
+const char* Knight::getType(){
 	if (colour == WHITE)
 		return "White's Knight";
 	else

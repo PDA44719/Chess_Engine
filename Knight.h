@@ -6,8 +6,8 @@
 class Knight : public Piece {
 	public:
 		Knight(char type);
-		void getType() override;
-		const char* returnType() override;
+		void getSymbol() override;
+		const char* getType() override;
 		int getPotentialMovesSize();
 		Move* getPotentialMoves();
 	private:

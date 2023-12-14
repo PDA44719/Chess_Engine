@@ -40,7 +40,7 @@ class Piece {
 			
 			/**
 			 * @brief Virtual method to get the unicode symbol of each piece. This is
-			 * used for ChessBoard's displayBoard method, which returns a visual
+			 * used for ChessBoard's displayPieces method, which returns a visual
 			 * representation of the board
 			 */
 			virtual void getSymbol() = 0;

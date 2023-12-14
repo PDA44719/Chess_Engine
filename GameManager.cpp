@@ -29,23 +29,23 @@ Color GameManager::getTurn() {
 	return turn;
 }
 
+// NOTE: This method assumes valid FEN string (we were told this was fine)
 void GameManager::setCastlingInformation(const char* castling_char) const {
-	// FIXME: MIGHT WANT TO DO DYNAMIC CAST TO ENSURE THE KING AND QUEEN ARE WHERE THEY ARE SUPPOSED TO
 	while (*castling_char != '\n'){
 		switch(*castling_char){
-			case 'K':
+			case 'K': // White's king-side castling is available
 				static_cast<King*>((*cb)[Position("E1")])->setHasMoved(false);
 				static_cast<Rook*>((*cb)[Position("H1")])->setHasMoved(false);
 				break;
-			case 'Q':
+			case 'Q': // White's queen-side castling is available
 				static_cast<King*>((*cb)[Position("E1")])->setHasMoved(false);
 				static_cast<Rook*>((*cb)[Position("A1")])->setHasMoved(false);
 				break;
-			case 'k':
+			case 'k': // Black's king-side castling is available
 				static_cast<King*>((*cb)[Position("E8")])->setHasMoved(false);
 				static_cast<Rook*>((*cb)[Position("H8")])->setHasMoved(false);
 				break;
-			case 'q':
+			case 'q': // Black's queen-side castling is available
 				static_cast<King*>((*cb)[Position("E8")])->setHasMoved(false);
 				static_cast<Rook*>((*cb)[Position("A8")])->setHasMoved(false);
 				break;
@@ -110,9 +110,9 @@ bool GameManager::isMoveValid(const Position& p, const Position& final_p, bool a
 	return false;
 }
 
-void GameManager::getRookPosition(const Move& m, const Position& king_pos, Position& rook_pos){
-	King* king_at_origin = dynamic_cast<King*>((*cb)[king_pos]);
-	King* king_at_destination = dynamic_cast<King*>((*cb)[king_pos+m]);
+void GameManager::getRookPosition(const Move& m, const Position& piece_pos, Position& rook_pos){
+	King* king_at_origin = dynamic_cast<King*>((*cb)[piece_pos]);
+	King* king_at_destination = dynamic_cast<King*>((*cb)[piece_pos+m]);
 	
 	// If king is present at the starting position (i.e., makeMove called this method)
 	if (king_at_origin){
@@ -173,15 +173,6 @@ Piece* GameManager::makeMove(const Position& p, const Position& final_p){
 	// If move being attempted is a castling move
 	if (initial_rook_pos != Position("XX")){ 
 		castle(p, final_p, initial_rook_pos, p+m.getDirection(), false);
-		//// Move the King to final_p, store its has_moved state and change it to true
-		//(*cb)[final_p] = (*cb)[p];
-		//(*cb)[p] = NULL; 
-
-		//// Move the rook to its destination, store its has_moved state and change it to true 
-		//(*cb)[p+m.getDirection()] = (*cb)[initial_rook_pos];
-		//previous_has_moved_state2 = (*cb)[p+m.getDirection()]->hasMoved();
-		//(*cb)[p+m.getDirection()]->setHasMoved(true);
-		//(*cb)[initial_rook_pos] = NULL;
 		return NULL;
 	}
 
@@ -209,14 +200,6 @@ void GameManager::undoLastMove(const Position& p, const Position& final_p, Piece
 	// If last move was a castling move
 	if (initial_rook_pos != Position("XX")){ 
 		castle(final_p, p, p+m.getDirection(), initial_rook_pos, true);
-		//// Move king to original position, and restore its has_moved status
-		//(*cb)[p] = (*cb)[final_p]; 
-		//(*cb)[final_p] = NULL;
-
-		//// Repeat process with the rook
-		//(*cb)[initial_rook_pos] = (*cb)[p+m.getDirection()]; 
-		//(*cb)[initial_rook_pos]->setHasMoved(previous_has_moved_state2);
-		//(*cb)[p+m.getDirection()] = NULL; 
 		return;
 	}
 
